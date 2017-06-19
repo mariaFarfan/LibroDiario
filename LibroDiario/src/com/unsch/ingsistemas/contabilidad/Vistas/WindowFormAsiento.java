@@ -7,6 +7,7 @@ package com.unsch.ingsistemas.contabilidad.Vistas;
 
 import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
 import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
+import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,8 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,13 +32,13 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
      * Creates new form WindowFormAsiento
      */
     public void modificarDatosporBusquedaRegistro(String numeroAsiento) {
-        String s = "select numeroAsiento,fecha,totaldebe,totalhaber,glosa,numeroDoc  from asiento where numeroAsiento="+numeroAsiento+";";
+        String s = "select numeroAsiento,fecha,totaldebe,totalhaber,glosa,numeroDoc  from asiento where numeroAsiento=" + numeroAsiento + ";";
         ConexionBD mysql = new ConexionBD();
         Connection cn = mysql.getConexion();
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(s);
-            int c=0;
+            int c = 0;
             while (rs.next()) {
                 jtfnumeroasiento.setText(rs.getString(1));
                 jtfFecha.setText(rs.getString(2));
@@ -45,9 +48,9 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
                 jtfnumerodoc.setText(rs.getString(6));
                 c++;
             }
-            
-             if (c==0) {
-                jtfnumeroasiento.setText(""+obtnerultimoRgtr());
+
+            if (c == 0) {
+                jtfnumeroasiento.setText("" + obtnerultimoRgtr());
                 jtfFecha.setText(getFecha());
                 jtfTotal1.setText("");
                 jtfTotal2.setText("");
@@ -72,7 +75,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         modelo.setRowCount(0);
         String[] registro = new String[4];
         //String s = "select concat(idcategoria, ' - ',iddisco) as codigo, tipoDisco, nombreDisco, cantidadDisponible from disco";
-        String s = "select codigo,descripcion,debe,haber  from tablaasiento where numeroAsiento="+numeroAsiento+";";
+        String s = "select codigo,descripcion,debe,haber  from tablaasiento where numeroAsiento=" + numeroAsiento + ";";
         ConexionBD mysql = new ConexionBD();
         Connection cn = mysql.getConexion();
         try {
@@ -87,10 +90,10 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
                 registro[3] = rs.getString(4);
                 modelo.addRow(registro);
             }
-            if (c==0) {
-                JOptionPane.showMessageDialog(null,"No existe Documento");
+            if (c == 0) {
+                JOptionPane.showMessageDialog(null, "No existe Documento");
             }
-            
+
             jtbLibro.setModel(modelo);
 //            TableColumnModel columnModel = jtbLibro.getColumnModel();
 //            for (int i = 0; i < columnModel.getColumnCount(); i++) {
@@ -182,6 +185,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0));
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -196,7 +201,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jtfMonto = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jcbCargar = new javax.swing.JComboBox<>();
+        jcbCargar = new javax.swing.JComboBox<String>();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -228,6 +233,14 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jtfTotal1 = new javax.swing.JTextField();
         jtfTotal2 = new javax.swing.JTextField();
 
+        jMenuItem1.setText("Eliminar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem1);
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -257,7 +270,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Transacción :");
 
-        jcbCargar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CARGAR", "ABONAR" }));
+        jcbCargar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CARGAR", "ABONAR" }));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -406,6 +419,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtbLibro.setComponentPopupMenu(jPopupMenu1);
         jtbLibro.setSurrendersFocusOnKeystroke(true);
         jScrollPane1.setViewportView(jtbLibro);
         if (jtbLibro.getColumnModel().getColumnCount() > 0) {
@@ -440,6 +454,11 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton3);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/block.png"))); // NOI18N
@@ -461,6 +480,11 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton6);
 
         jLabel10.setText("Glosa para el Asiento*");
@@ -724,6 +748,23 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        DefaultTableModel dtm = (DefaultTableModel) jtbLibro.getModel(); //TableProducto es el nombre de mi tabla ;) 
+        dtm.removeRow(jtbLibro.getSelectedRow());
+        sumaDeber();
+        sumaHaber();
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
@@ -750,10 +791,12 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
