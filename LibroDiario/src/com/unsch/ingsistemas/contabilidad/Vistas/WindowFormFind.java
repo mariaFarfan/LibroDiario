@@ -5,17 +5,76 @@
  */
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
+import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
+import java.awt.Point;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author José Maldonado <josephcand at gmail.com>
  */
 public class WindowFormFind extends javax.swing.JFrame {
 
+    DefaultTableModel modelo;
+
     /**
      * Creates new form WindowFormFind1
      */
+    public void llenarTabla() {
+        modelo = (DefaultTableModel) jtbCuentas.getModel();
+        modelo.setRowCount(0);
+        String[] registro = new String[2];
+        //String s = "select concat(idcategoria, ' - ',iddisco) as codigo, tipoDisco, nombreDisco, cantidadDisponible from disco";
+        String s = "select concat(c1,c2,c3,c4) as Cuentas, Descricpcion from plan;";
+        ConexionBD mysql = new ConexionBD();
+        Connection cn = mysql.getConexion();
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(s);
+            while (rs.next()) {
+                registro[0] = rs.getString(1);
+                registro[1] = rs.getString(2);
+                modelo.addRow(registro);
+            }
+            jtbCuentas.setModel(modelo);
+            TableColumnModel columnModel = jtbCuentas.getColumnModel();
+            for (int i = 0; i < columnModel.getColumnCount(); i++) {
+                jtbCuentas.getColumnModel().getColumn(0).setMaxWidth(70);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        System.out.println("lleno tabla ok");
+    }
+
+    private TableRowSorter trsfiltro;
+
+    public void filtro() {
+        int columnaB = 0;
+        if (jComboBox1.getSelectedItem() == "DESCRIPCION") {
+            columnaB = 1;
+            System.out.println(" -- ");
+        }
+        if (jComboBox1.getSelectedItem() == "CODIGO") {
+            columnaB = 0;
+        }
+        trsfiltro.setRowFilter(RowFilter.regexFilter("(?i)" + jtfFiltro.getText(), columnaB));
+    }
+
     public WindowFormFind() {
         initComponents();
+        llenarTabla();
     }
 
     /**
@@ -30,20 +89,19 @@ public class WindowFormFind extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtbCuentas = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtfFiltro = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Asistente de Ayuda");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtbCuentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -59,13 +117,27 @@ public class WindowFormFind extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jtbCuentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbCuentasMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtbCuentasMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtbCuentas);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setText("Buscar");
 
         jLabel3.setText("Buscar Por :");
+
+        jtfFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfFiltroKeyPressed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DESCRIPCION", "CODIGO" }));
 
@@ -75,15 +147,17 @@ public class WindowFormFind extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(144, 144, 144)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(144, 144, 144)
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jtfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +168,7 @@ public class WindowFormFind extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -107,9 +181,6 @@ public class WindowFormFind extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/accept.png"))); // NOI18N
-        jLabel4.setText("INGRESAR");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -120,14 +191,12 @@ public class WindowFormFind extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(168, 168, 168)
                         .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel4)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton1))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -140,10 +209,8 @@ public class WindowFormFind extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,7 +223,7 @@ public class WindowFormFind extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -165,6 +232,60 @@ public class WindowFormFind extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void llenarGrupo(String cuenta) {
+        String s = "select  grupo  from plan where c1='" + cuenta + "' || c2='" + cuenta + "' || c3='" + cuenta + "' || c4='" + cuenta + "' ;";
+        ConexionBD mysql = new ConexionBD();
+        Connection cn = mysql.getConexion();
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(s);
+            while (rs.next()) {
+                WindowFormAsiento.jtfGrupo.setText(rs.getString(1));
+//                registro[0] = rs.getString(1);
+//                registro[1] = rs.getString(2);
+//                modelo.addRow(registro);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        System.out.println("Modifico Grupo");
+    }
+    private void jtfFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfFiltroKeyPressed
+        jtfFiltro.addKeyListener(new KeyAdapter() {
+            public void keyReleased(final KeyEvent e) {
+                String cadena = (jtfFiltro.getText());
+                jtfFiltro.setText(cadena);
+                repaint();
+                filtro();
+            }
+        });
+        trsfiltro = new TableRowSorter(jtbCuentas.getModel());
+        jtbCuentas.setRowSorter(trsfiltro);
+    }//GEN-LAST:event_jtfFiltroKeyPressed
+
+    private void jtbCuentasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCuentasMousePressed
+        String cuenta = "";
+        String descripcion = "";
+        JTable table = (JTable) evt.getSource();
+        Point point = evt.getPoint();
+        int row = table.rowAtPoint(point);
+        if (evt.getClickCount() == 2) {
+            cuenta = "" + jtbCuentas.getValueAt(jtbCuentas.getSelectedRow(), 0);
+            descripcion = "" + jtbCuentas.getValueAt(jtbCuentas.getSelectedRow(), 1);
+            WindowFormAsiento.jtfCuenta.setText(cuenta);
+            WindowFormAsiento.jtfDescripcion.setText(descripcion);
+            llenarGrupo(cuenta);
+            dispose();
+        }
+
+
+    }//GEN-LAST:event_jtbCuentasMousePressed
+
+    private void jtbCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbCuentasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtbCuentasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -180,16 +301,24 @@ public class WindowFormFind extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WindowFormFind.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowFormFind.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WindowFormFind.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowFormFind.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WindowFormFind.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowFormFind.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WindowFormFind.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowFormFind.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -208,11 +337,10 @@ public class WindowFormFind extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtbCuentas;
+    private javax.swing.JTextField jtfFiltro;
     // End of variables declaration//GEN-END:variables
 }

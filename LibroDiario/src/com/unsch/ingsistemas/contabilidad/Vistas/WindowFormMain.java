@@ -6,6 +6,9 @@
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -163,12 +166,16 @@ public class WindowFormMain extends javax.swing.JFrame {
 
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        WindowFormAsiento n = new WindowFormAsiento();
-        escritorio.add(n);
-        Dimension desktopSize = escritorio.getSize();
-        Dimension FrameSize = n.getSize();
-        n.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
-        n.show();
+        try {
+            WindowFormAsiento n = new WindowFormAsiento();
+            escritorio.add(n);
+            Dimension desktopSize = escritorio.getSize();
+            Dimension FrameSize = n.getSize();
+            n.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+            n.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowFormMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
