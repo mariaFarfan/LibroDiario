@@ -15,10 +15,21 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -42,8 +53,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 jtfnumeroasiento.setText(rs.getString(1));
                 jtfFecha.setText(rs.getString(2));
-                jtfTotal1.setText(rs.getString(3));
-                jtfTotal2.setText(rs.getString(4));
+                jtfTotaldebe.setText(rs.getString(3));
+                jtfTotalHaber.setText(rs.getString(4));
                 jTextArea2.setText(rs.getString(5));
                 jtfnumerodoc.setText(rs.getString(6));
                 c++;
@@ -52,8 +63,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
             if (c == 0) {
                 jtfnumeroasiento.setText("" + obtnerultimoRgtr());
                 jtfFecha.setText(getFecha());
-                jtfTotal1.setText("");
-                jtfTotal2.setText("");
+                jtfTotaldebe.setText("");
+                jtfTotalHaber.setText("");
                 jTextArea2.setText("");
                 jtfnumerodoc.setText("");
                 // codigo descri monto grupo
@@ -122,7 +133,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
             }
 
         }
-        jtfTotal2.setText(String.valueOf(total));
+        jtfTotalHaber.setText(String.valueOf(total));
     }
 
     public void sumaDeber() {
@@ -141,7 +152,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
             }
 
         }
-        jtfTotal1.setText(String.valueOf(total));
+        jtfTotaldebe.setText(String.valueOf(total));
     }
 
     public int obtnerultimoRgtr() throws SQLException {
@@ -169,8 +180,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
 
         initComponents();
         jtfFecha.setText("" + getFecha());
-        jtfTotal1.setText("00.00");
-        jtfTotal2.setText("00.00");
+        jtfTotaldebe.setText("00.00");
+        jtfTotalHaber.setText("00.00");
         jtfnumeroasiento.setText("" + obtnerultimoRgtr());
         jtfBuscarDoc.setText("" + obtnerultimoRgtr());
     }
@@ -201,7 +212,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jtfMonto = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jcbCargar = new javax.swing.JComboBox<String>();
+        jcbCargar = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -230,8 +241,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        jtfTotal1 = new javax.swing.JTextField();
-        jtfTotal2 = new javax.swing.JTextField();
+        jtfTotaldebe = new javax.swing.JTextField();
+        jtfTotalHaber = new javax.swing.JTextField();
 
         jMenuItem1.setText("Eliminar");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -270,7 +281,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Transacción :");
 
-        jcbCargar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CARGAR", "ABONAR" }));
+        jcbCargar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CARGAR", "ABONAR" }));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -473,6 +484,11 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton5);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/delete.png"))); // NOI18N
@@ -556,11 +572,11 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
 
         jLabel13.setText("Totales :");
 
-        jtfTotal1.setEditable(false);
-        jtfTotal1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtfTotaldebe.setEditable(false);
+        jtfTotaldebe.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jtfTotal2.setEditable(false);
-        jtfTotal2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtfTotalHaber.setEditable(false);
+        jtfTotalHaber.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -579,9 +595,9 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel13)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jtfTotal1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfTotaldebe, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jtfTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfTotalHaber, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel10)
@@ -607,8 +623,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfTotal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfTotalHaber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfTotaldebe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,7 +725,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        guardarAsiento(jtfnumeroasiento.getText(), jtfFecha.getText(), jtfTotal1.getText(), jtfTotal2.getText(), jTextArea2.getText(), jtfnumerodoc.getText());
+        guardarAsiento(jtfnumeroasiento.getText(), jtfFecha.getText(), jtfTotaldebe.getText(), jtfTotalHaber.getText(), jTextArea2.getText(), jtfnumerodoc.getText());
         guardartablaAsiento(jtfnumeroasiento.getText());
         JOptionPane.showMessageDialog(null, "Asiento Guardado \nExitosamente :) ");
 
@@ -762,8 +778,34 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       
+
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        try {
+            // Generar reportes
+            JasperReport jr = (JasperReport) JRLoader.loadObject(WindowFormAsiento.class.getResource("/com/unsch/ingsistemas/contabilidad/Reportes/AC.jasper"));
+            Map parametro = new HashMap<String, Object>();
+            parametro.put("fecha", (String) jtfFecha.getText());
+            parametro.put("asiento", (String) jtfnumeroasiento.getText());
+            parametro.put("glosa", (String) jTextArea2.getText());
+            parametro.put("totalDebe", (String) jtfTotaldebe.getText());
+            parametro.put("totalHaber", (String) jtfTotalHaber.getText());
+            
+            JRTableModelDataSource jrtmd = new JRTableModelDataSource(jtbLibro.getModel());
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, jrtmd);
+//            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, new JREmptyDataSource());
+
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.show();
+            jv.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -811,8 +853,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtfFecha;
     public static javax.swing.JTextField jtfGrupo;
     private javax.swing.JTextField jtfMonto;
-    private javax.swing.JTextField jtfTotal1;
-    private javax.swing.JTextField jtfTotal2;
+    private javax.swing.JTextField jtfTotalHaber;
+    private javax.swing.JTextField jtfTotaldebe;
     private javax.swing.JTextField jtfnumeroasiento;
     private javax.swing.JTextField jtfnumerodoc;
     // End of variables declaration//GEN-END:variables

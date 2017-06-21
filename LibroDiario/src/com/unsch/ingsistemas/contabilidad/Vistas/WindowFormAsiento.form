@@ -81,9 +81,9 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jtfTotal1" min="-2" pref="95" max="-2" attributes="0"/>
+                                  <Component id="jtfTotaldebe" min="-2" pref="95" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jtfTotal2" min="-2" pref="99" max="-2" attributes="0"/>
+                                  <Component id="jtfTotalHaber" min="-2" pref="99" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -118,8 +118,8 @@
                       <Component id="jScrollPane1" min="-2" pref="226" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jtfTotal2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jtfTotal1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jtfTotalHaber" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jtfTotaldebe" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -529,6 +529,9 @@
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton6">
                   <Properties>
@@ -661,13 +664,13 @@
                 <Property name="text" type="java.lang.String" value="Totales :"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jtfTotal1">
+            <Component class="javax.swing.JTextField" name="jtfTotaldebe">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="horizontalAlignment" type="int" value="0"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jtfTotal2">
+            <Component class="javax.swing.JTextField" name="jtfTotalHaber">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="horizontalAlignment" type="int" value="0"/>
