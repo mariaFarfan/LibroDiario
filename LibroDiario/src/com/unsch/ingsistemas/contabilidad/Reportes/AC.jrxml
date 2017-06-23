@@ -21,10 +21,6 @@
 	</background>
 	<title>
 		<band height="114" splitType="Stretch">
-			<image>
-				<reportElement x="29" y="5" width="418" height="50" uuid="ab6942b4-949a-4db9-8828-ff654f78d60b"/>
-				<imageExpression><![CDATA["C:\\Proyectos\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo_unsch.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="10" y="91" width="256" height="20" uuid="4a3f9843-4e77-4c27-9fe2-49eec5fcf876"/>
 				<textElement>
@@ -42,10 +38,6 @@
 			<line>
 				<reportElement x="8" y="109" width="544" height="1" uuid="bb63590b-bcac-4569-aa7c-a81d5c61b65d"/>
 			</line>
-			<image>
-				<reportElement x="490" y="5" width="418" height="50" uuid="84cfeb0a-798c-4d25-b534-ac62b4d93ff8"/>
-				<imageExpression><![CDATA["C:\\Proyectos\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo_unsch.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="104" y="0" width="384" height="91" uuid="2556a163-b97e-48ed-a069-4fde843b57eb"/>
 				<textElement>
@@ -60,6 +52,14 @@
 				</textElement>
 				<text><![CDATA[Datos del asiento :]]></text>
 			</staticText>
+			<image>
+				<reportElement x="12" y="5" width="77" height="59" uuid="55121447-ce9e-49ae-83a8-6707637ad831"/>
+				<imageExpression><![CDATA["C:\\Proyecto\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="488" y="3" width="77" height="59" uuid="efe0f7c2-7b85-4dfc-82bc-14f5b1f6c902"/>
+				<imageExpression><![CDATA["C:\\Proyecto\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -108,13 +108,6 @@
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="290" y="36" width="158" height="63" uuid="1844541a-5d29-49bd-b72a-30e663ba9f52"/>
-				<textElement>
-					<font size="26"/>
-				</textElement>
-				<text><![CDATA[Static text]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
