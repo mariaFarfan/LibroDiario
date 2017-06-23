@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5424a009-1fbb-412f-8236-3c5a5f12720e">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="274"/>
-	<property name="ireport.y" value="184"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -21,18 +21,9 @@
 	</background>
 	<title>
 		<band height="114" splitType="Stretch">
-			<staticText>
-				<reportElement style="Title" x="110" y="0" width="334" height="33" uuid="27d762b1-47fd-4d52-ac05-eb2155776aa8"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[CONTABILIDAD GENERAL]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="171" y="33" width="174" height="22" uuid="73a724e3-706c-4e78-8901-acbf9ac305bf"/>
-				<text><![CDATA[Datos del Asiento N°]]></text>
-			</staticText>
 			<image>
-				<reportElement x="495" y="0" width="482" height="68" uuid="f5b6055d-c852-418d-8ac7-390a4d412b2f"/>
-				<imageExpression><![CDATA["C:\\Proyecto\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo_unsch.png"]]></imageExpression>
+				<reportElement x="29" y="5" width="418" height="50" uuid="ab6942b4-949a-4db9-8828-ff654f78d60b"/>
+				<imageExpression><![CDATA["C:\\Proyectos\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo_unsch.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="10" y="91" width="256" height="20" uuid="4a3f9843-4e77-4c27-9fe2-49eec5fcf876"/>
@@ -42,19 +33,33 @@
 				<text><![CDATA[ALUMNA: FARFAN OCHATOMA, Maria Magdalena]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="348" y="33" width="77" height="22" uuid="48ca4280-4050-4fd6-9897-1451fdf9164b"/>
+				<reportElement x="319" y="42" width="77" height="22" uuid="48ca4280-4050-4fd6-9897-1451fdf9164b"/>
 				<textElement>
-					<font fontName="Arial" size="18"/>
+					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{asiento}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="12" y="0" width="482" height="68" uuid="711c3eda-f715-4760-a5f6-91afdd61cc7d"/>
-				<imageExpression><![CDATA["C:\\Proyecto\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo_unsch.png"]]></imageExpression>
-			</image>
 			<line>
 				<reportElement x="8" y="109" width="544" height="1" uuid="bb63590b-bcac-4569-aa7c-a81d5c61b65d"/>
 			</line>
+			<image>
+				<reportElement x="490" y="5" width="418" height="50" uuid="84cfeb0a-798c-4d25-b534-ac62b4d93ff8"/>
+				<imageExpression><![CDATA["C:\\Proyectos\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo_unsch.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="104" y="0" width="384" height="91" uuid="2556a163-b97e-48ed-a069-4fde843b57eb"/>
+				<textElement>
+					<font fontName="Century" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTABILIDAD GENERAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="41" width="142" height="27" uuid="32efea0a-19e0-4938-a5cc-da2348fd6c97"/>
+				<textElement>
+					<font fontName="Arial" size="17"/>
+				</textElement>
+				<text><![CDATA[Datos del asiento :]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -103,6 +108,13 @@
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="36" width="158" height="63" uuid="1844541a-5d29-49bd-b72a-30e663ba9f52"/>
+				<textElement>
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
