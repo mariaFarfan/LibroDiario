@@ -1,6 +1,9 @@
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class WindowFormLogin extends javax.swing.JFrame {
@@ -18,8 +21,8 @@ public class WindowFormLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        textInputPass1 = new jcmouse.materialdesign.TextInputPass();
-        textInput1 = new jcmouse.materialdesign.TextInput();
+        txtpass = new jcmouse.materialdesign.TextInputPass();
+        txtinput = new jcmouse.materialdesign.TextInput();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
@@ -39,15 +42,15 @@ public class WindowFormLogin extends javax.swing.JFrame {
         jLabel3.setText("CONTRASEÑA :");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
-        textInputPass1.setColorPrimary(new java.awt.Color(0, 102, 255));
-        textInputPass1.setHint("Password");
-        textInputPass1.setMaxLength(16);
-        jPanel1.add(textInputPass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 190, -1));
+        txtpass.setColorPrimary(new java.awt.Color(0, 102, 255));
+        txtpass.setHint("Password");
+        txtpass.setMaxLength(16);
+        jPanel1.add(txtpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 190, -1));
 
-        textInput1.setColorPrimary(new java.awt.Color(0, 102, 255));
-        textInput1.setHint("Usuario");
-        textInput1.setMaxLength(16);
-        jPanel1.add(textInput1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 190, -1));
+        txtinput.setColorPrimary(new java.awt.Color(0, 102, 255));
+        txtinput.setHint("Usuario");
+        txtinput.setMaxLength(16);
+        jPanel1.add(txtinput, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 190, -1));
 
         jButton1.setText("INGRESAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -76,23 +79,32 @@ public class WindowFormLogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        if (this.textInput1.getText().trim().length() > 0) {
-            textInput1.setErrorEnabled(false);
-            if (this.textInput1.getText().trim().length() > 16) {
-                textInput1.setError("Longitud maxima de " + textInput1.getMaxLength() + " caracteres");
-                textInput1.setErrorEnabled(true);
-            } else if (this.textInputPass1.getText().trim().length() > 0) {
-                textInputPass1.setErrorEnabled(false);
-                textInput1.setErrorEnabled(false);
-                JOptionPane.showMessageDialog(this, "Usuario: " + textInput1.getText() + "\n"
-                        + "Contraseña: " + textInputPass1.getText() + "\ngracias!!!");
+        if (this.txtinput.getText().trim().length() > 0) {
+            txtinput.setErrorEnabled(false);
+            if (this.txtinput.getText().trim().length() > 16) {
+                txtinput.setError("Longitud maxima de " + txtinput.getMaxLength() + " caracteres");
+                txtinput.setErrorEnabled(true);
+            } else if (this.txtpass.getText().trim().length() > 0) {
+                txtpass.setErrorEnabled(false);
+                txtinput.setErrorEnabled(false);
+
+                if (txtinput.getText().equalsIgnoreCase("admi") && txtpass.getText().equalsIgnoreCase("123")) {
+                    WindowFormMain v = new WindowFormMain();
+                    v.setVisible(true);
+                    v.setLocationRelativeTo(null);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Usuario y/o Contraseña incorrecto \n INGRESE DE NUEVO!");
+                }
+
+               
             } else {
-                textInputPass1.setError("Debe escribir su contraseña");
-                textInputPass1.setErrorEnabled(true);
+                txtpass.setError("Debe escribir su contraseña");
+                txtpass.setErrorEnabled(true);
             }
         } else {
-            textInput1.setError("Debe escribir su nombre de usuario");
-            textInput1.setErrorEnabled(true);
+            txtinput.setError("Debe escribir su nombre de usuario");
+            txtinput.setErrorEnabled(true);
         }
 
 
@@ -140,7 +152,7 @@ public class WindowFormLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private jcmouse.materialdesign.TextInput textInput1;
-    private jcmouse.materialdesign.TextInputPass textInputPass1;
+    private jcmouse.materialdesign.TextInput txtinput;
+    private jcmouse.materialdesign.TextInputPass txtpass;
     // End of variables declaration//GEN-END:variables
 }

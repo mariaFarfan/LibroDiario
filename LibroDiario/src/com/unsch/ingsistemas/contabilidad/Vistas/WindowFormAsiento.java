@@ -184,6 +184,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jtfTotalHaber.setText("00.00");
         jtfnumeroasiento.setText("" + obtnerultimoRgtr());
         jtfBuscarDoc.setText("" + obtnerultimoRgtr());
+        this.setTitle("Registrar Asiento Contable - UNSCH - EPIS - Contabilidad General");
     }
 
     /**
@@ -212,7 +213,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jtfMonto = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jcbCargar = new javax.swing.JComboBox<>();
+        jcbCargar = new javax.swing.JComboBox<String>();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -226,7 +227,6 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -281,7 +281,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Transacción :");
 
-        jcbCargar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CARGAR", "ABONAR" }));
+        jcbCargar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CARGAR", "ABONAR" }));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -313,7 +313,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jtfnumeroasiento, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 150, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -471,13 +471,6 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(jButton3);
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/block.png"))); // NOI18N
-        jButton4.setText("ANULAR ");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/full_page.png"))); // NOI18N
         jButton5.setText("REPORTE");
@@ -670,12 +663,12 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
             DefaultTableModel modelo = (DefaultTableModel) jtbLibro.getModel();
 
             double monto = Double.parseDouble(jtfMonto.getText());
-            if (jcbCargar.getSelectedItem() == "CARGAR") {
+            if (jcbCargar.getSelectedItem() == "ABONAR") {
                 modelo.addRow(new Object[]{jtfCuenta.getText(), jtfDescripcion.getText(), "", "" + monto});
 
             }
-            if (jcbCargar.getSelectedItem() == "ABONAR") {
-                modelo.addRow(new Object[]{jtfCuenta.getText(), "             " + jtfDescripcion.getText(), "" + monto, ""});
+            if (jcbCargar.getSelectedItem() == "CARGAR") {
+                modelo.addRow(new Object[]{jtfCuenta.getText(),jtfDescripcion.getText(), "" + monto, ""});
 
             }
         } catch (Exception e) {
@@ -779,6 +772,24 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
+        try {
+            jtfCuenta.setText("");
+            jtfDescripcion.setText("");
+            // atabla
+            modelo = (DefaultTableModel) jtbLibro.getModel();
+            modelo.setRowCount(0);
+            jtbLibro.setModel(modelo);
+            jtfMonto.setText("");
+            jTextArea2.setText("");
+            jtfnumeroasiento.setText(obtnerultimoRgtr() + "");
+            jtfBuscarDoc.setText(obtnerultimoRgtr() + "");
+            sumaDeber();
+            sumaHaber();
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowFormAsiento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -792,7 +803,7 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
             parametro.put("glosa", (String) jTextArea2.getText());
             parametro.put("totalDebe", (String) jtfTotaldebe.getText());
             parametro.put("totalHaber", (String) jtfTotalHaber.getText());
-            
+
             JRTableModelDataSource jrtmd = new JRTableModelDataSource(jtbLibro.getModel());
 
             JasperPrint jp = JasperFillManager.fillReport(jr, parametro, jrtmd);
@@ -814,7 +825,6 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

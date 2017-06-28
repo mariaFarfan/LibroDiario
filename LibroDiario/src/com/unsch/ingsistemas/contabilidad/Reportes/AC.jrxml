@@ -29,7 +29,7 @@
 				<text><![CDATA[ALUMNA: FARFAN OCHATOMA, Maria Magdalena]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="319" y="42" width="77" height="22" uuid="48ca4280-4050-4fd6-9897-1451fdf9164b"/>
+				<reportElement x="334" y="42" width="47" height="22" uuid="48ca4280-4050-4fd6-9897-1451fdf9164b"/>
 				<textElement>
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
@@ -39,26 +39,26 @@
 				<reportElement x="8" y="109" width="544" height="1" uuid="bb63590b-bcac-4569-aa7c-a81d5c61b65d"/>
 			</line>
 			<staticText>
-				<reportElement x="104" y="0" width="384" height="91" uuid="2556a163-b97e-48ed-a069-4fde843b57eb"/>
+				<reportElement x="197" y="17" width="196" height="24" uuid="2556a163-b97e-48ed-a069-4fde843b57eb"/>
 				<textElement>
-					<font fontName="Century" size="24" isBold="true"/>
+					<font fontName="Century" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONTABILIDAD GENERAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="172" y="41" width="142" height="27" uuid="32efea0a-19e0-4938-a5cc-da2348fd6c97"/>
+				<reportElement x="227" y="41" width="102" height="23" uuid="32efea0a-19e0-4938-a5cc-da2348fd6c97"/>
 				<textElement>
-					<font fontName="Arial" size="17"/>
+					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Datos del asiento :]]></text>
 			</staticText>
 			<image>
-				<reportElement x="12" y="5" width="77" height="59" uuid="55121447-ce9e-49ae-83a8-6707637ad831"/>
-				<imageExpression><![CDATA["C:\\Proyecto\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo.jpg"]]></imageExpression>
+				<reportElement x="12" y="0" width="77" height="78" uuid="4c49fa5d-8010-4281-a4c6-d2b359983d02"/>
+				<imageExpression><![CDATA["C:\\Proyectos\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo.jpg"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="488" y="3" width="77" height="59" uuid="efe0f7c2-7b85-4dfc-82bc-14f5b1f6c902"/>
-				<imageExpression><![CDATA["C:\\Proyecto\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo.jpg"]]></imageExpression>
+				<reportElement x="476" y="0" width="77" height="78" uuid="19cf50e5-96d8-48a0-a31d-c2c538621ffd"/>
+				<imageExpression><![CDATA["C:\\Proyectos\\LibroDiario\\LibroDiario\\src\\com\\unsch\\ingsistemas\\contabilidad\\Reportes\\logo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

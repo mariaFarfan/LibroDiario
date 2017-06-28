@@ -78,7 +78,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="jcmouse.materialdesign.TextInputPass" name="textInputPass1">
+        <Component class="jcmouse.materialdesign.TextInputPass" name="txtpass">
           <Properties>
             <Property name="colorPrimary" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="66" red="0" type="rgb"/>
@@ -92,7 +92,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="jcmouse.materialdesign.TextInput" name="textInput1">
+        <Component class="jcmouse.materialdesign.TextInput" name="txtinput">
           <Properties>
             <Property name="colorPrimary" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="66" red="0" type="rgb"/>
