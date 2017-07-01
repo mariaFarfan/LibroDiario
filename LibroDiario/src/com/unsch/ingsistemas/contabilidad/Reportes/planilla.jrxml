@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d6d646ff-29ef-43e7-a89c-5102dd7c0a83">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     planilla.`nombre` AS planilla_nombre,
+     planilla.`cargo` AS planilla_cargo,
+     planilla.`haberBasico` AS planilla_haberBasico,
+     planilla.`asignacionFamiliar` AS planilla_asignacionFamiliar,
+     planilla.`otrosIngresos` AS planilla_otrosIngresos,
+     planilla.`RemuneracionBruta` AS planilla_RemuneracionBruta,
+     planilla.`afp` AS planilla_afp,
+     planilla.`snp` AS planilla_snp,
+     planilla.`otrosDescuentos` AS planilla_otrosDescuentos,
+     planilla.`remuneracionNeta` AS planilla_remuneracionNeta,
+     planilla.`seguro` AS planilla_seguro,
+     planilla.`senati` AS planilla_senati,
+     planilla.`sctr` AS planilla_sctr,
+     planilla.`otrosAportes` AS planilla_otrosAportes
+FROM
+     `planilla` planilla]]>
+	</queryString>
+	<field name="planilla_nombre" class="java.lang.String"/>
+	<field name="planilla_cargo" class="java.lang.String"/>
+	<field name="planilla_haberBasico" class="java.lang.String"/>
+	<field name="planilla_asignacionFamiliar" class="java.lang.String"/>
+	<field name="planilla_otrosIngresos" class="java.lang.String"/>
+	<field name="planilla_RemuneracionBruta" class="java.lang.String"/>
+	<field name="planilla_afp" class="java.lang.String"/>
+	<field name="planilla_snp" class="java.lang.String"/>
+	<field name="planilla_otrosDescuentos" class="java.lang.String"/>
+	<field name="planilla_remuneracionNeta" class="java.lang.String"/>
+	<field name="planilla_seguro" class="java.lang.String"/>
+	<field name="planilla_senati" class="java.lang.String"/>
+	<field name="planilla_sctr" class="java.lang.String"/>
+	<field name="planilla_otrosAportes" class="java.lang.String"/>
+	<group name="planilla_nombre">
+		<groupExpression><![CDATA[$F{planilla_nombre}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<frame>
+					<reportElement mode="Opaque" x="-21" y="7" width="843" height="24" forecolor="#B89F7D" backcolor="#F2EBDF" uuid="d35c99f9-21c4-4a0b-8d3a-5ee4d7f56305"/>
+					<rectangle>
+						<reportElement mode="Opaque" x="21" y="0" width="36" height="24" backcolor="#736343" uuid="d8f62a2a-7499-4759-983c-edbc4ff075c1"/>
+						<graphicElement>
+							<pen lineWidth="0.0"/>
+						</graphicElement>
+					</rectangle>
+					<textField>
+						<reportElement style="SubTitle" x="134" y="0" width="578" height="24" forecolor="#736343" uuid="612819c9-f135-4ff4-a7b2-76187eeeb2b4"/>
+						<textElement verticalAlignment="Middle">
+							<font size="12" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{planilla_nombre}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="57" y="4" width="77" height="20" uuid="6381efbf-7c3b-40e6-b4f3-d262711fb20a"/>
+						<textElement>
+							<font size="14" isBold="true"/>
+						</textElement>
+						<text><![CDATA[NOMBRES: ]]></text>
+					</staticText>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="1" y="0" width="801" height="62" uuid="b5397330-9094-424f-9e58-d89814629a12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD NACIONAL DE SAN CRISTOBAL DE HUAMANGA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="1" y="62" width="801" height="22" uuid="a97ad478-98aa-4779-a5b2-2272397e0f99"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[ESCUELA PROFESIONAL DE INGENIRERIA DE SISTEMAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="0def1447-b018-4dd9-a04a-75c5ba4298bd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="173" height="15" forecolor="#736343" uuid="5cc715b6-8dff-4c99-9e3a-8626b4890300"/>
+				<text><![CDATA[CARGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="173" y="0" width="65" height="15" forecolor="#736343" uuid="1a20efcf-d85c-4f8e-a33e-9213c4efd14b"/>
+				<text><![CDATA[HB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="238" y="1" width="36" height="15" forecolor="#736343" uuid="e5842620-b44c-4064-997b-81eb4f376240"/>
+				<text><![CDATA[AF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="274" y="0" width="39" height="15" forecolor="#736343" uuid="244538fd-81b8-4204-aba6-89a169d73e1b"/>
+				<text><![CDATA[OI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="313" y="0" width="61" height="15" forecolor="#736343" uuid="a1f6d358-ad78-47ee-94c1-826227cf6b5a"/>
+				<text><![CDATA[R. BRUTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="374" y="0" width="42" height="15" forecolor="#736343" uuid="2f7bc4e7-4a20-4ada-a3cc-9466fc0b75dd"/>
+				<text><![CDATA[AFP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="425" y="0" width="38" height="15" forecolor="#736343" uuid="d21a592d-ca83-4024-a996-73ef2288df92"/>
+				<text><![CDATA[SNP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="472" y="0" width="33" height="15" forecolor="#736343" uuid="4017fa6e-615b-48bf-a577-0be1dfd5f066"/>
+				<text><![CDATA[OD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="514" y="0" width="61" height="15" forecolor="#736343" uuid="a6b39adf-122e-44e1-8ca3-5d6ac338d37e"/>
+				<text><![CDATA[R. NETA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="585" y="0" width="57" height="15" forecolor="#736343" uuid="3c2dca48-88c9-43f4-813d-647c17b8b929"/>
+				<text><![CDATA[SEGURO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="655" y="1" width="46" height="15" forecolor="#736343" uuid="b86aad28-d241-4c48-8582-b01fca9f68be"/>
+				<text><![CDATA[SENATI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="709" y="0" width="38" height="15" forecolor="#736343" uuid="0c42836f-4cea-4cba-b2be-3f2bac17ed19"/>
+				<text><![CDATA[SCTR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="747" y="0" width="46" height="15" forecolor="#736343" uuid="353afc0d-a996-4710-839a-3d45c49123a6"/>
+				<text><![CDATA[OA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="a012a18a-6b26-4731-93b3-24a9e14ae9fb"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="173" height="15" uuid="83432356-3d30-43f4-b877-562c7274107f"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_cargo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="173" y="0" width="65" height="15" uuid="7ea5185f-5d04-49df-af1d-f6531bb990bc"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_haberBasico}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="238" y="0" width="36" height="15" uuid="d2b2bc11-7b7b-4273-a6fc-11315d71a3f7"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_asignacionFamiliar}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="274" y="0" width="39" height="15" uuid="a434ad27-e742-41d9-93b9-87679331c20b"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_otrosIngresos}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="313" y="0" width="61" height="15" uuid="f95b5bdb-ac9a-4938-a161-e58ff8ca9f94"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_RemuneracionBruta}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="374" y="0" width="42" height="15" uuid="a3edc64e-c173-4f1c-b6f6-93a0e9d4d1f1"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_afp}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="425" y="0" width="38" height="15" uuid="aaad481f-2a23-4058-8b17-15e0ec587908"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_snp}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="472" y="0" width="33" height="15" uuid="9e7695ec-d3b0-4538-a5f8-0913ab374ea8"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_otrosDescuentos}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="514" y="0" width="61" height="15" uuid="9e28bfbf-ae88-4fbf-90c1-a00ae148456d"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_remuneracionNeta}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="585" y="0" width="57" height="15" uuid="a84233bf-7d71-4aaa-96c8-8b03d48d063c"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_seguro}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="655" y="0" width="46" height="15" uuid="fc32087f-7b35-4ca6-b0a0-c9afff0cf31b"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_senati}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="709" y="0" width="38" height="15" uuid="b81e53bd-309e-484f-bc10-e0e39a6c94bc"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_sctr}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="747" y="0" width="46" height="15" uuid="cacdfb65-58a9-4abf-8537-1385c3eba057"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planilla_otrosAportes}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="ca3ef8de-1768-409b-bb7d-f297ea2646a9"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="87f25bdb-e56d-4cc9-a7c8-8f41719faa42"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="6746bc3a-7592-485d-9b98-ff3051ad102b"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="26e9c76f-e7a4-4566-8371-d7ee867b5b0d"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="31e938aa-6d2f-4ec3-9a27-b931c803bd84"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

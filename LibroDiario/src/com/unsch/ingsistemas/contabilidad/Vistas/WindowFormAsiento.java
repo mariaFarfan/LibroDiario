@@ -292,10 +292,13 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jLabel9.setText("SubG :");
 
         jtfnumeroasiento.setEditable(false);
+        jtfnumeroasiento.setForeground(new java.awt.Color(153, 0, 0));
 
         jtfGrupo.setEditable(false);
+        jtfGrupo.setForeground(new java.awt.Color(153, 0, 0));
 
         jTextField7.setEditable(false);
+        jTextField7.setForeground(new java.awt.Color(153, 0, 0));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -566,9 +569,11 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         jLabel13.setText("Totales :");
 
         jtfTotaldebe.setEditable(false);
+        jtfTotaldebe.setForeground(new java.awt.Color(153, 0, 0));
         jtfTotaldebe.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jtfTotalHaber.setEditable(false);
+        jtfTotalHaber.setForeground(new java.awt.Color(153, 0, 0));
         jtfTotalHaber.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
