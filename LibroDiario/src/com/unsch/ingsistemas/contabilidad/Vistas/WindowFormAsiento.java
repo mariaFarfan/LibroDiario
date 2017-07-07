@@ -737,6 +737,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "No existe Documento");
 
         }
+        sumaDeber();
+        sumaHaber();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -749,6 +751,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No existe Documento");
         }
+        sumaDeber();
+        sumaHaber();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -760,6 +764,8 @@ public class WindowFormAsiento extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No existe Documento");
         }
+        sumaDeber();
+        sumaHaber();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed

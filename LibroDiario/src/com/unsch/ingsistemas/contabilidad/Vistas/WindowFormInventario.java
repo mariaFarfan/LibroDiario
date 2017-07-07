@@ -5,12 +5,16 @@
  */
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
+import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
 import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import nn.WindowFormFind2;
@@ -23,8 +27,99 @@ import nn.WindowFormFind5;
  * @author MARIA
  */
 public class WindowFormInventario extends javax.swing.JInternalFrame {
-
     
+     public void guardartablaAsientoPatrimonio(String numeroAsiento) {
+        ArrayList<TablaAsiento> reg = new ArrayList();
+        try {
+            TablaAsiento tabla = new TablaAsiento();
+            tabla.setNumeroAsiento(numeroAsiento);
+            tabla.setCodigo("50");
+            tabla.setDescripcion("CAPITAL");
+            tabla.setDebe("0");
+            tabla.setHaber(jLabel19.getText());
+
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into tablaasiento values(NULL,'" + numeroAsiento + "','" + tabla.getCodigo() + "','" + tabla.getDescripcion() + "','" + tabla.getDebe() + "','" + tabla.getHaber() + "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+
+            System.out.println(tabla.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
+    public void guardartablaAsiento1(String numeroAsiento) {
+        ArrayList<TablaAsiento> reg = new ArrayList();
+        try {
+            TablaAsiento tabla = new TablaAsiento();
+            tabla.setNumeroAsiento(numeroAsiento);
+            tabla.setCodigo((String) cod);
+            tabla.setDescripcion(jtfDescripcion.getText());
+            tabla.setDebe(jtfMonto.getText());
+            tabla.setHaber("0");
+
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into tablaasiento values(NULL,'" + numeroAsiento + "','" + tabla.getCodigo() + "','" + tabla.getDescripcion() + "','" + tabla.getDebe() + "','" + tabla.getHaber() + "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+
+            System.out.println(tabla.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
+    public void guardartablaAsiento2(String numeroAsiento) {
+        ArrayList<TablaAsiento> reg = new ArrayList();
+        try {
+            TablaAsiento tabla = new TablaAsiento();
+            tabla.setNumeroAsiento(numeroAsiento);
+            tabla.setCodigo((String) cod);
+            tabla.setDescripcion(jtfDescripcion1.getText());
+            tabla.setDebe(jtfMonto1.getText());
+            tabla.setHaber("0");
+
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into tablaasiento values(NULL,'" + numeroAsiento + "','" + tabla.getCodigo() + "','" + tabla.getDescripcion() + "','" + tabla.getDebe() + "','" + tabla.getHaber() + "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+
+            System.out.println(tabla.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
+    public void guardartablaAsiento3(String numeroAsiento) {
+        ArrayList<TablaAsiento> reg = new ArrayList();
+        try {
+            TablaAsiento tabla = new TablaAsiento();
+            tabla.setNumeroAsiento(numeroAsiento);
+            tabla.setCodigo((String) cod);
+            tabla.setDescripcion(jtfDescripcion2.getText());
+            tabla.setDebe("0");
+            tabla.setHaber(jtfMonto2.getText());
+
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into tablaasiento values(NULL,'" + numeroAsiento + "','" + tabla.getCodigo() + "','" + tabla.getDescripcion() + "','" + tabla.getDebe() + "','" + tabla.getHaber() + "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+
+            System.out.println(tabla.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
     public int obtnerultimoRgtr() throws SQLException {
         int cx = 0;
 
@@ -39,17 +134,117 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
 
     }
 
+    public void sumaActivoCorriente() {
+        String a = "";
+        double total = 0;
+        double b = 0;
+
+        for (int fila = 0; fila < jtbInventario1.getRowCount(); fila++) {
+
+            if (jtbInventario1.getValueAt(fila, 1) != "") {
+                a = String.valueOf(jtbInventario1.getValueAt(fila, 1));
+                b = Double.valueOf(a);
+                total = total + b;
+            } else {
+                total = total + 0;
+            }
+
+        }
+        txtTotalAcCor.setText(String.valueOf(total));
+    }
+
+    public void sumaActivoNoCorriente() {
+        String a = "";
+        double total = 0;
+        double b = 0;
+
+        for (int fila = 0; fila < JTBaCTIVOcORRIENTE1.getRowCount(); fila++) {
+
+            if (JTBaCTIVOcORRIENTE1.getValueAt(fila, 1) != "") {
+                a = String.valueOf(JTBaCTIVOcORRIENTE1.getValueAt(fila, 1));
+                b = Double.valueOf(a);
+                total = total + b;
+            } else {
+                total = total + 0;
+            }
+
+        }
+        txtTotalANC.setText(String.valueOf(total));
+    }
+
+    public void sumaPasivoCorriente() {
+        String a = "";
+        double total = 0;
+        double b = 0;
+
+        for (int fila = 0; fila < JTBaCTIVOcORRIENTE2.getRowCount(); fila++) {
+
+            if (JTBaCTIVOcORRIENTE2.getValueAt(fila, 1) != "") {
+                a = String.valueOf(JTBaCTIVOcORRIENTE2.getValueAt(fila, 1));
+                b = Double.valueOf(a);
+                total = total + b;
+            } else {
+                total = total + 0;
+            }
+
+        }
+        txtTotalPC.setText(String.valueOf(total));
+    }
+
+    public void sumaPasivoNoCorriente() {
+        String a = "";
+        double total = 0;
+        double b = 0;
+
+        for (int fila = 0; fila < JTBaCTIVOcORRIENTE3.getRowCount(); fila++) {
+
+            if (JTBaCTIVOcORRIENTE3.getValueAt(fila, 1) != "") {
+                a = String.valueOf(JTBaCTIVOcORRIENTE3.getValueAt(fila, 1));
+                b = Double.valueOf(a);
+                total = total + b;
+            } else {
+                total = total + 0;
+            }
+
+        }
+        txtTotalPNC.setText(String.valueOf(total));
+    }
+
+    public void patrimonioNeto() {
+        double patrimnonioNeto2 = (Double.parseDouble(txtTotalAcCor.getText()) + Double.parseDouble(txtTotalANC.getText())) - (Double.parseDouble(txtTotalPC.getText()) + Double.parseDouble(txtTotalPNC.getText()));
+        double totalActivo = (Double.parseDouble(txtTotalAcCor.getText()) + Double.parseDouble(txtTotalANC.getText()));
+        double totalPasivo = (Double.parseDouble(txtTotalPC.getText()) + Double.parseDouble(txtTotalPNC.getText()));
+        double patpasiv = patrimnonioNeto2 + totalPasivo;
+        lblTotalActivo.setText("" + totalActivo);
+        lblTotalPasivo.setText("" + totalPasivo);
+        jLabel19.setText(patrimnonioNeto2 + "");
+        lblpasivoPatrimonio.setText("" + patpasiv);
+    }
+
     public String getFecha() {
         Date ahora = new Date();
         SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yy");
         return formateador.format(ahora);
     }
-    
+
+    int ultimoRegistroBD = obtnerultimoRgtr();
+
     /**
      * Creates new form WindowFormInventario
      */
-    public WindowFormInventario() {
+    public WindowFormInventario() throws SQLException {
         initComponents();
+        jtfFecha.setText(getFecha());
+        lblTotalActivo.setText("00.00");
+        lblTotalPasivo.setText("00.00");
+        txtTotalANC.setText("0.00");
+        txtTotalAcCor.setText("0.00");
+        txtTotalPC.setText("0.00");
+        txtTotalPNC.setText("0.00");
+        jLabel19.setText("0.00");
+        lblpasivoPatrimonio.setText("0.00");
+        guardarAsiento(ultimoRegistroBD + "" + "", jtfFecha.getText(), "0", "0", jTextArea1.getText(), "");
+
     }
 
     /**
@@ -76,10 +271,10 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jtfMonto = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        JTBaCTIVOcORRIENTE = new javax.swing.JTable();
+        jtbInventario1 = new javax.swing.JTable();
         jButton10 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtTotalAcCor = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -90,7 +285,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         JTBaCTIVOcORRIENTE1 = new javax.swing.JTable();
         jButton11 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        txtTotalANC = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lblTotalActivo = new javax.swing.JLabel();
@@ -104,7 +299,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         JTBaCTIVOcORRIENTE2 = new javax.swing.JTable();
         jButton12 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtTotalPC = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -115,12 +310,17 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         JTBaCTIVOcORRIENTE3 = new javax.swing.JTable();
         jButton13 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
+        txtTotalPNC = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        lblTotalActivo1 = new javax.swing.JLabel();
+        lblTotalPasivo = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        lblpasivoPatrimonio = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -186,7 +386,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
             }
         });
 
-        JTBaCTIVOcORRIENTE.setModel(new javax.swing.table.DefaultTableModel(
+        jtbInventario1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -194,11 +394,11 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                 "DENOMINACION", "MONTO"
             }
         ));
-        jScrollPane1.setViewportView(JTBaCTIVOcORRIENTE);
-        if (JTBaCTIVOcORRIENTE.getColumnModel().getColumnCount() > 0) {
-            JTBaCTIVOcORRIENTE.getColumnModel().getColumn(1).setMinWidth(100);
-            JTBaCTIVOcORRIENTE.getColumnModel().getColumn(1).setPreferredWidth(100);
-            JTBaCTIVOcORRIENTE.getColumnModel().getColumn(1).setMaxWidth(100);
+        jScrollPane1.setViewportView(jtbInventario1);
+        if (jtbInventario1.getColumnModel().getColumnCount() > 0) {
+            jtbInventario1.getColumnModel().getColumn(1).setMinWidth(100);
+            jtbInventario1.getColumnModel().getColumn(1).setPreferredWidth(100);
+            jtbInventario1.getColumnModel().getColumn(1).setMaxWidth(100);
         }
 
         jButton10.setText("GUARDAR");
@@ -215,9 +415,9 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtTotalAcCor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtTotalAcCorActionPerformed(evt);
             }
         });
 
@@ -234,7 +434,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTotalAcCor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,7 +468,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalAcCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)))
         );
 
@@ -313,9 +513,9 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtTotalANC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtTotalANCActionPerformed(evt);
             }
         });
 
@@ -332,20 +532,21 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTotalANC, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addComponent(jLabel11)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jtfMonto1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(160, 160, 160)
-                            .addComponent(jButton11))
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel7Layout.createSequentialGroup()
-                            .addComponent(jtfDescripcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtfMonto1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton11))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                                .addComponent(jtfDescripcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -365,7 +566,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalANC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)))
         );
 
@@ -449,9 +650,9 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtTotalPC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtTotalPCActionPerformed(evt);
             }
         });
 
@@ -463,23 +664,23 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTotalPC, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jtfMonto2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(160, 160, 160)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton12))
-                            .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel8Layout.createSequentialGroup()
                                 .addComponent(jtfDescripcion2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))))
@@ -502,7 +703,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalPC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)))
         );
 
@@ -547,9 +748,9 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtTotalPNC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtTotalPNCActionPerformed(evt);
             }
         });
 
@@ -566,22 +767,22 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTotalPNC, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jtfMonto3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(160, 160, 160)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton13))
-                            .addGroup(jPanel9Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jtfDescripcion3, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -600,12 +801,12 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotalPNC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)))
         );
 
-        lblTotalActivo1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        lblTotalActivo1.setForeground(new java.awt.Color(204, 0, 51));
+        lblTotalPasivo.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        lblTotalPasivo.setForeground(new java.awt.Color(204, 0, 51));
 
         jLabel17.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jLabel17.setText("TOTAL PASIVO");
@@ -618,13 +819,13 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(12, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTotalActivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTotalPasivo, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
         jPanel4Layout.setVerticalGroup(
@@ -636,7 +837,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTotalActivo1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotalPasivo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -655,41 +856,87 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         jLabel16.setForeground(new java.awt.Color(0, 51, 204));
         jLabel16.setText("INVENTARIO INICIAL");
 
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("PATRIMONIO NETO"));
+
+        jLabel18.setText("TOTAL PATRIMONIO NETO");
+
+        jLabel19.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(204, 51, 0));
+        jLabel19.setText("jLabel19");
+
+        jLabel20.setText("Total  Pasivo y Patrimonio");
+
+        lblpasivoPatrimonio.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        lblpasivoPatrimonio.setForeground(new java.awt.Color(204, 51, 0));
+        lblpasivoPatrimonio.setText("jLabel19");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblpasivoPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(lblpasivoPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(0, 6, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(286, 286, 286)
                 .addComponent(jLabel16)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)))
+                .addGap(0, 39, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton5)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jScrollPane3.setViewportView(jPanel6);
@@ -698,9 +945,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 855, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -712,14 +957,18 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         try {
-            DefaultTableModel modelo = (DefaultTableModel) JTBaCTIVOcORRIENTE.getModel();
+
+            DefaultTableModel modelo = (DefaultTableModel) jtbInventario1.getModel();
 
             double monto = Double.parseDouble(jtfMonto.getText());
-            modelo.addRow(new Object[]{jtfDescripcion.getText(),jtfMonto.getText()});
-            
+            modelo.addRow(new Object[]{jtfDescripcion.getText(), jtfMonto.getText()});
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ingrese un numero correcto");
         }
+        sumaActivoCorriente();
+        patrimonioNeto();
+        guardartablaAsiento1(ultimoRegistroBD + "");
 //        sumaDeber();
 //        sumaHaber();
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -734,9 +983,9 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfMontoActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtTotalAcCorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalAcCorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtTotalAcCorActionPerformed
 
     private void jtfMonto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfMonto1ActionPerformed
         // TODO add your handling code here:
@@ -744,15 +993,18 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-          try {
+        try {
             DefaultTableModel modelo = (DefaultTableModel) JTBaCTIVOcORRIENTE1.getModel();
 
-            double monto = Double.parseDouble(jtfMonto.getText());
-            modelo.addRow(new Object[]{jtfDescripcion.getText(),jtfMonto.getText()});
-            
+            double monto = Double.parseDouble(jtfMonto1.getText());
+            modelo.addRow(new Object[]{jtfDescripcion1.getText(), jtfMonto1.getText()});
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ingrese un numero correcto");
         }
+        sumaActivoNoCorriente();
+        patrimonioNeto();
+        guardartablaAsiento2(ultimoRegistroBD + "");
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -761,73 +1013,121 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
         n.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtTotalANCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalANCActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtTotalANCActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtTotalPNCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalPNCActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtTotalPNCActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-         WindowFormFind5 n = new WindowFormFind5();
+        WindowFormFind5 n = new WindowFormFind5();
         n.setLocationRelativeTo(null);
         n.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    static public String cod = "";
+    static public String descripciong = "";
+
+    public void guardarAsiento(String ul, String fecha, String totaldebe, String totalhaber, String glosa, String numerodoc) {
+
+        try {
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into asiento values(NULL,'" + ul + "','" + fecha + "','" + totaldebe + "','" + totalhaber + "','" + glosa + "','" + numerodoc + "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
+    public void guardartablaAsiento4(String numeroAsiento) {
+        ArrayList<TablaAsiento> reg = new ArrayList();
+        try {
+            TablaAsiento tabla = new TablaAsiento();
+            tabla.setNumeroAsiento(numeroAsiento);
+            tabla.setCodigo((String) cod);
+            tabla.setDescripcion(jtfDescripcion3.getText());
+            tabla.setDebe("0");
+            tabla.setHaber(jtfMonto3.getText());
+
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into tablaasiento values(NULL,'" + numeroAsiento + "','" + tabla.getCodigo() + "','" + tabla.getDescripcion() + "','" + tabla.getDebe() + "','" + tabla.getHaber() + "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+
+            System.out.println(tabla.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-          try {
+        try {
+
             DefaultTableModel modelo = (DefaultTableModel) JTBaCTIVOcORRIENTE3.getModel();
 
-            double monto = Double.parseDouble(jtfMonto.getText());
-            modelo.addRow(new Object[]{jtfDescripcion.getText(),jtfMonto.getText()});
-            
+            double monto = Double.parseDouble(jtfMonto3.getText());
+            modelo.addRow(new Object[]{jtfDescripcion3.getText(), jtfMonto3.getText()});
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ingrese un numero correcto");
         }
+        sumaPasivoNoCorriente();
+        patrimonioNeto();
+
+        guardartablaAsiento4(ultimoRegistroBD + "");
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jtfMonto3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfMonto3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfMonto3ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtTotalPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalPCActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtTotalPCActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-         WindowFormFind4 n = new WindowFormFind4();
+        WindowFormFind4 n = new WindowFormFind4();
         n.setLocationRelativeTo(null);
         n.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
-          try {
+        try {
             DefaultTableModel modelo = (DefaultTableModel) JTBaCTIVOcORRIENTE2.getModel();
 
-            double monto = Double.parseDouble(jtfMonto.getText());
-            modelo.addRow(new Object[]{jtfDescripcion.getText(),jtfMonto.getText()});
-            
+            double monto = Double.parseDouble(jtfMonto2.getText());
+            modelo.addRow(new Object[]{jtfDescripcion2.getText(), jtfMonto2.getText()});
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ingrese un numero correcto");
         }
+        sumaPasivoCorriente();
+        patrimonioNeto();
+        guardartablaAsiento3(ultimoRegistroBD + "");
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jtfMonto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfMonto2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfMonto2ActionPerformed
 
+   
+    
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        guardartablaAsientoPatrimonio(ultimoRegistroBD+"");
+        JOptionPane.showMessageDialog(null,"Inventario Guardado :) " );
     }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable JTBaCTIVOcORRIENTE;
     private javax.swing.JTable JTBaCTIVOcORRIENTE1;
     private javax.swing.JTable JTBaCTIVOcORRIENTE2;
     private javax.swing.JTable JTBaCTIVOcORRIENTE3;
@@ -849,7 +1149,10 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -861,6 +1164,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -872,10 +1176,7 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable jtbInventario1;
     public static javax.swing.JTextField jtfDescripcion;
     public static javax.swing.JTextField jtfDescripcion1;
     public static javax.swing.JTextField jtfDescripcion2;
@@ -886,6 +1187,11 @@ public class WindowFormInventario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtfMonto2;
     private javax.swing.JTextField jtfMonto3;
     private javax.swing.JLabel lblTotalActivo;
-    private javax.swing.JLabel lblTotalActivo1;
+    private javax.swing.JLabel lblTotalPasivo;
+    private javax.swing.JLabel lblpasivoPatrimonio;
+    private javax.swing.JTextField txtTotalANC;
+    private javax.swing.JTextField txtTotalAcCor;
+    private javax.swing.JTextField txtTotalPC;
+    private javax.swing.JTextField txtTotalPNC;
     // End of variables declaration//GEN-END:variables
 }

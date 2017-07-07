@@ -276,6 +276,8 @@ public class WindowFormFind2 extends javax.swing.JFrame {
 //            cuenta = "" + jtbCuentas.getValueAt(jtbCuentas.getSelectedRow(), 0);
             descripcion = "" + jtbCuentas.getValueAt(jtbCuentas.getSelectedRow(), 1);
 //            WindowFormAsiento.jtfCuenta.setText(cuenta);
+            WindowFormInventario.cod=(String) jtbCuentas.getValueAt(jtbCuentas.getSelectedRow(), 0);
+            WindowFormInventario.descripciong=(String) jtbCuentas.getValueAt(jtbCuentas.getSelectedRow(), 1);
             WindowFormInventario.jtfDescripcion.setText(descripcion);
 //            llenarGrupo(cuenta);
             dispose();
