@@ -51,6 +51,7 @@ public class WindowFormMain extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton4 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -78,6 +79,20 @@ public class WindowFormMain extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton4);
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/dinero.png"))); // NOI18N
+        jButton7.setText("Ventas");
+        jButton7.setFocusable(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setMaximumSize(new java.awt.Dimension(110, 100));
+        jButton7.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton7);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/planilla.png"))); // NOI18N
         jButton5.setText("Planilla");
@@ -138,6 +153,8 @@ public class WindowFormMain extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/Yosemite.jpg"))); // NOI18N
 
+        escritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
@@ -148,7 +165,6 @@ public class WindowFormMain extends javax.swing.JFrame {
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        escritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -259,6 +275,15 @@ public class WindowFormMain extends javax.swing.JFrame {
         n.show();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        WindowFormVentas n = new WindowFormVentas();
+        escritorio.add(n);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = n.getSize();
+        n.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        n.show();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -301,6 +326,7 @@ public class WindowFormMain extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar jToolBar1;

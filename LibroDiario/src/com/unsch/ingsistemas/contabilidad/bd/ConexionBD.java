@@ -10,7 +10,7 @@ public class ConexionBD {
     private String servidor = "localhost";
     private String database = "pcge2015";
     private String usuario = "root";
-    private String password = "newlifefb94";
+    private String password = "";
     private String url = "";
 
 //    public ConexionBD(String servidor, String database, String usuario, String password) {
