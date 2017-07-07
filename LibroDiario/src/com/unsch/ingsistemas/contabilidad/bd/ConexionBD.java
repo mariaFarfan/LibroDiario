@@ -1,11 +1,8 @@
 package com.unsch.ingsistemas.contabilidad.bd;
 
-import com.mysql.jdbc.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 
 public class ConexionBD {
 
@@ -13,7 +10,7 @@ public class ConexionBD {
     private String servidor = "localhost";
     private String database = "pcge2015";
     private String usuario = "root";
-    private String password = "newlifefb94";
+    private String password = "";
     private String url = "";
 
 //    public ConexionBD(String servidor, String database, String usuario, String password) {
