@@ -276,12 +276,16 @@ public class WindowFormMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        WindowFormVentas n = new WindowFormVentas();
-        escritorio.add(n);
-        Dimension desktopSize = escritorio.getSize();
-        Dimension FrameSize = n.getSize();
-        n.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
-        n.show();
+        try {
+            WindowFormVentas n = new WindowFormVentas();
+            escritorio.add(n);
+            Dimension desktopSize = escritorio.getSize();
+            Dimension FrameSize = n.getSize();
+            n.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+            n.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowFormMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**

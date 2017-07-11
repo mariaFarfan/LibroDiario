@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import static nn.main.redondearDecimales;
+import nn.n2t;
 
 /**
  *
@@ -131,7 +133,7 @@ public class WindowFormProduct extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 130, -1));
 
-        jButton1.setText("COMPRAR");
+        jButton1.setText("VENDER");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -153,6 +155,24 @@ public class WindowFormProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void sumaHaber() {
+        String a = "";
+        double total = 0;
+        double b = 0;
+
+        for (int fila = 0; fila < WindowFormVentas.jtbFactura.getRowCount(); fila++) {
+
+            if (WindowFormVentas.jtbFactura.getValueAt(fila, 3) != "") {
+                a = String.valueOf(WindowFormVentas.jtbFactura.getValueAt(fila, 3));
+                b = Double.valueOf(a);
+                total = total + b;
+            } else {
+                total = total + 0;
+            }
+
+        }
+        WindowFormVentas.txtSubTotal.setText(String.valueOf(total));
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         modelo1 = (DefaultTableModel) WindowFormVentas.jtbFactura.getModel();
         int row = jtbProducto.getSelectedRow();
@@ -169,6 +189,23 @@ public class WindowFormProduct extends javax.swing.JFrame {
         registroFactura[3] = importe + "";
         modelo1.addRow(registroFactura);
         WindowFormVentas.jtbFactura.setModel(modelo1);
+        sumaHaber();
+        dispose();
+        Double igv = Double.parseDouble(WindowFormVentas.txtSubTotal.getText()) * 0.18;
+        WindowFormVentas.txtIgv.setText(igv + "");
+        double total = redondearDecimales(igv + Double.parseDouble(WindowFormVentas.txtSubTotal.getText()), 2);
+        WindowFormVentas.txtTotal.setText(total + "");
+
+        double num = redondearDecimales(Double.parseDouble(WindowFormVentas.txtTotal.getText()), 2); //Double.parseDouble(WindowFormVentas.txtTotal.getText());
+        int p_ent = (int) num;
+        double p_dec = num - p_ent;
+
+        n2t numero = new n2t();
+        int decimales = (int) redondearDecimales(p_dec * 100, 2);
+
+        String res = numero.convertirLetras(p_ent) + " con " + numero.convertirLetras(decimales) + " /00 soles";
+        WindowFormVentas.txtMostrarNumeroLetra.setText(res);
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -177,6 +214,9 @@ public class WindowFormProduct extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        WindowFormProductAdd ventana = new WindowFormProductAdd();
+        ventana.setVisible(true);
+        ventana.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -222,7 +262,7 @@ public class WindowFormProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtbProducto;
+    public static javax.swing.JTable jtbProducto;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,12 +5,59 @@
  */
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
+import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
+import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormProduct.jtbProducto;
+import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
 /**
  *
  * @author USUARIO
  */
 public class WindowFormProductAdd extends javax.swing.JFrame {
 
+    DefaultTableModel modelo;
+    DefaultTableModel modelo1;
+
+      public void llenarTabla() {
+        modelo = (DefaultTableModel) WindowFormProduct.jtbProducto.getModel();
+        modelo.setRowCount(0);
+        String[] registro = new String[4];
+        //String s = "select concat(idcategoria, ' - ',iddisco) as codigo, tipoDisco, nombreDisco, cantidadDisponible from disco";
+        String s = "select Nombre,Descripcion,PrecioVenta,cantidad_existencia from producto;";
+        ConexionBD mysql = new ConexionBD();
+        Connection cn = mysql.getConexion();
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(s);
+            while (rs.next()) {
+                registro[0] = rs.getString(1);
+                registro[1] = rs.getString(2);
+                registro[2] = rs.getString(3);
+                registro[3] = rs.getString(4);
+                modelo.addRow(registro);
+            }
+            jtbProducto.setModel(modelo);
+            TableColumnModel columnModel = jtbProducto.getColumnModel();
+            for (int i = 0; i < columnModel.getColumnCount(); i++) {
+                jtbProducto.getColumnModel().getColumn(0).setMaxWidth(70);
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        //System.out.println("lleno tabla ok");
+    }
+    
     /**
      * Creates new form WindowFormProductAdd
      */
@@ -34,15 +81,15 @@ public class WindowFormProductAdd extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtnombre = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
+        txtPrecioVenta = new javax.swing.JTextField();
+        txtPrecioCompra = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -74,17 +121,22 @@ public class WindowFormProductAdd extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("cANTIDAD :");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, -1, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 150, -1));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 150, -1));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 150, -1));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 150, -1));
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 150, -1));
+        jPanel1.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 150, -1));
+        jPanel1.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 150, -1));
+        jPanel1.add(txtPrecioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 150, -1));
+        jPanel1.add(txtPrecioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 150, -1));
+        jPanel1.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 150, -1));
 
         jButton1.setText("GUARDAR PRODUCTO");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/FP2.jpeg"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 310));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 310));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,6 +153,28 @@ public class WindowFormProductAdd extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void guardartablaPlnilla(String nombre, String Descripcion, int canidadExistencia, double precioVenta, double precioCompra) {
+        try {
+            ArrayList<TablaAsiento> reg = new ArrayList();
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into producto values(NULL,'" + nombre + "','" + Descripcion + "'," + canidadExistencia + "," + precioVenta + "," + precioCompra + ")";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowFormProductAdd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        guardartablaPlnilla(txtnombre.getText(), txtDescripcion.getText(), Integer.parseInt(txtCantidad.getText()), Double.parseDouble(txtPrecioVenta.getText()), Double.parseDouble(txtPrecioCompra.getText()));
+        llenarTabla();
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,10 +221,10 @@ public class WindowFormProductAdd extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtPrecioCompra;
+    private javax.swing.JTextField txtPrecioVenta;
+    private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 }
