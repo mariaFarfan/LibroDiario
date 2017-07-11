@@ -56,7 +56,7 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
         jLabel19 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtbFactura = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
@@ -282,7 +282,7 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtbFactura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -290,17 +290,17 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
                 "Cant.", "Descripcion", "Precio Unit.", "Importe"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(100);
+        jScrollPane2.setViewportView(jtbFactura);
+        if (jtbFactura.getColumnModel().getColumnCount() > 0) {
+            jtbFactura.getColumnModel().getColumn(0).setMinWidth(100);
+            jtbFactura.getColumnModel().getColumn(0).setPreferredWidth(100);
+            jtbFactura.getColumnModel().getColumn(0).setMaxWidth(100);
+            jtbFactura.getColumnModel().getColumn(2).setMinWidth(100);
+            jtbFactura.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jtbFactura.getColumnModel().getColumn(2).setMaxWidth(100);
+            jtbFactura.getColumnModel().getColumn(3).setMinWidth(100);
+            jtbFactura.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jtbFactura.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         jLabel20.setText("SON :");
@@ -314,6 +314,11 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
         jLabel24.setText("TOTAL  S/.");
 
         jButton1.setText("AGREGAR PRODUCTO");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,7 +398,7 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
                         .addComponent(jLabel22)
                         .addGap(14, 14, 14)
                         .addComponent(jLabel24)))
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -419,6 +424,13 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        WindowFormProduct n = new WindowFormProduct();
+        n.setLocationRelativeTo(null);
+        n.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -454,7 +466,6 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
@@ -462,5 +473,6 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    public static javax.swing.JTable jtbFactura;
     // End of variables declaration//GEN-END:variables
 }
