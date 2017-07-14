@@ -60,6 +60,7 @@ public class WindowFormMain extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jToolBar1.setBackground(new java.awt.Color(204, 204, 255));
         jToolBar1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -81,7 +82,7 @@ public class WindowFormMain extends javax.swing.JFrame {
         jToolBar1.add(jButton4);
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/dinero.png"))); // NOI18N
-        jButton7.setText("Ventas");
+        jButton7.setText("Operaciones");
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setMaximumSize(new java.awt.Dimension(110, 100));
@@ -276,16 +277,13 @@ public class WindowFormMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        try {
-            WindowFormVentas n = new WindowFormVentas();
-            escritorio.add(n);
-            Dimension desktopSize = escritorio.getSize();
-            Dimension FrameSize = n.getSize();
-            n.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
-            n.show();
-        } catch (SQLException ex) {
-            Logger.getLogger(WindowFormMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        OptionBoleta_Factura n = new OptionBoleta_Factura();
+//            WindowFormVentas n = new WindowFormVentas();
+        escritorio.add(n);
+        Dimension desktopSize = escritorio.getSize();
+        Dimension FrameSize = n.getSize();
+        n.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        n.show();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
@@ -324,7 +322,7 @@ public class WindowFormMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane escritorio;
+    public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
