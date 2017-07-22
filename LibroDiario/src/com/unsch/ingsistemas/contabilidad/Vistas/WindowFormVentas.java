@@ -68,15 +68,14 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
 
     }
 
-    public void guardartablaAsientoPatrimonio() {
-        ArrayList<TablaAsiento> reg = new ArrayList();
+    public void guardartablaAsientoFactura() {
         try {
             TablaAsiento tabla1 = new TablaAsiento();
             tabla1.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
-            tabla1.setCodigo("50");
-            tabla1.setDescripcion("CAPITAL");
+            tabla1.setCodigo("121");
+            tabla1.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR COBRAR");
             tabla1.setDebe("0");
-            tabla1.setHaber(txtIgv.getText());
+            tabla1.setHaber(txtTotal.getText());
 
             ConexionBD con = new ConexionBD();
             String sql = "insert into tablaasiento values(NULL,'" + tabla1.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
@@ -86,24 +85,24 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
 
             TablaAsiento tabla2 = new TablaAsiento();
             tabla2.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
-            tabla2.setCodigo("50");
-            tabla2.setDescripcion("CAPITAL");
-            tabla2.setDebe("0");
-            tabla2.setHaber(txtIgv.getText());
+            tabla2.setCodigo("4011");
+            tabla2.setDescripcion("IMPUESTO GENERAL A LAS VENTAS ");
+            tabla2.setDebe(txtIgv.getText());
+            tabla2.setHaber("0");
 
-            String sql2 = "insert into tablaasiento values(NULL,'" + tabla2.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
+            String sql2 = "insert into tablaasiento values(NULL,'" + tabla2.getNumeroAsiento() + "','" + tabla2.getCodigo() + "','" + tabla2.getDescripcion() + "','" + tabla2.getDebe() + "','" + tabla2.getHaber() + "')";
             Statement s2 = (Statement) con.getConexion().createStatement();
-            s2.executeUpdate(sql);
+            s2.executeUpdate(sql2);
             s2.close();
 
             TablaAsiento tabla3 = new TablaAsiento();
             tabla3.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
-            tabla3.setCodigo("50");
-            tabla3.setDescripcion("CAPITAL");
-            tabla3.setDebe("0");
-            tabla3.setHaber(txtIgv.getText());
+            tabla3.setCodigo("701");
+            tabla3.setDescripcion("MERCADERÍAS");
+            tabla3.setDebe(txtSubTotal.getText());
+            tabla3.setHaber("0");
 
-            String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
+            String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla3.getCodigo() + "','" + tabla3.getDescripcion() + "','" + tabla3.getDebe() + "','" + tabla3.getHaber() + "')";
             Statement s3 = (Statement) con.getConexion().createStatement();
             s3.executeUpdate(sql3);
             s3.close();
@@ -302,22 +301,23 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(63, 63, 63)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(80, 80, 80)))))
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -331,9 +331,9 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(25, 25, 25)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -448,6 +448,11 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton3);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/delete.png"))); // NOI18N
@@ -494,7 +499,7 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
                                 .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -532,7 +537,7 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
                         .addComponent(jLabel24)))
                 .addGap(18, 18, 18)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -566,13 +571,14 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
         n.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void guardartablaPlnilla(String numeroCorrelativo, String fecha, String cliente, String ruc, String subTotal, String igv, String total) {
+    public void guardarFactura(String numeroCorrelativo, String fecha, String cliente, String ruc, String subTotal, String igv, String total) {
         try {
             ArrayList<TablaAsiento> reg = new ArrayList();
             ConexionBD con = new ConexionBD();
             String sql = "insert into factura values(NULL,'" + numeroCorrelativo + "','" + fecha + "','" + cliente + "','" + ruc + "','" + subTotal + "','" + igv + "','" + total + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
+            s.close();
             con.cerrarConexion();
         } catch (SQLException ex) {
             Logger.getLogger(WindowFormProductAdd.class.getName()).log(Level.SEVERE, null, ex);
@@ -582,22 +588,29 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        guardartablaPlnilla(txtNumeroCorrelativo.getText(), txtfecha.getText(), txtCliente.getText(), txtruc.getText(), txtSubTotal.getText(), txtIgv.getText(), txtTotal.getText());
+        guardarFactura(txtNumeroCorrelativo.getText(), txtfecha.getText(), txtCliente.getText(), txtruc.getText(), txtSubTotal.getText(), txtIgv.getText(), txtTotal.getText());
 
         try {
+            guardartablaAsientoFactura();
+            String ultimoRegistro = obtnerultimoRgtrAsiento()+"";
             ConexionBD con = new ConexionBD();
-            String sql = "insert into asiento values(NULL,'" + obtnerultimoRgtrAsiento()+"" + "','" + txtfecha.getText() + "','" + txtTotal.getText() + "','" + txtTotal.getText() + "','" + " Por la venta de mercaderia con factura " + "','" + txtNumeroCorrelativo.getText() + "')";
+            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + txtfecha.getText() + "','" + txtTotal.getText() + "','" + txtTotal.getText() + "','" + " Por la venta de mercaderia con factura " + "','" + txtNumeroCorrelativo.getText() + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
+             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
 
-        guardartablaAsientoPatrimonio();
+       
         JOptionPane.showMessageDialog(null, "Factura guardada");
 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
