@@ -83,7 +83,6 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtnumeroD1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setForeground(new java.awt.Color(204, 204, 255));
@@ -319,8 +318,6 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
 
         jLabel1.setText("N° Doc.");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "materia prima" }));
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -352,15 +349,11 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
                                             .addComponent(jLabel1)
                                             .addComponent(jLabel20)))))
                             .addComponent(jButton4))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 186, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                         .addComponent(txtnumeroD1)))
                 .addContainerGap())
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(99, 99, 99)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,9 +381,7 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -437,11 +428,21 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        double subtotal = main.redondearDecimales(Double.parseDouble(txtTotal1.getText()) / 1.18, 2);
-        double igv = main.redondearDecimales(subtotal * 0.18, 2);
 
-        txtigv.setText(igv + "");
-        txtSubtotal.setText(subtotal + "");
+        if (txtTotal1.getText().equals("")) {
+            double igv = main.redondearDecimales(Double.parseDouble(txtSubtotal.getText()) * 0.18, 2);
+            double total = main.redondearDecimales(Double.parseDouble(txtSubtotal.getText()) + igv, 2);
+            txtTotal1.setText(total + "");
+            txtigv.setText(igv + "");
+        } else {
+            double subtotal = main.redondearDecimales(Double.parseDouble(txtTotal1.getText()) / 1.18, 2);
+            double igv = main.redondearDecimales((subtotal) * 0.18, 2);
+
+            txtigv.setText(igv + "");
+            txtSubtotal.setText(subtotal + "");
+        }
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     public void guardartablaAsientoFactura() {
@@ -533,7 +534,7 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
             guardartablaAsientoFactura();
             String ultimoRegistro = obtnerultimoRgtrAsiento() + "";
             ConexionBD con = new ConexionBD();
-            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" +  txtTotal1.getText() + "','" + txtTotal1.getText() + "','" + " Por la compra de mercaderia con factura " + "','" + txtnumeroD2.getText()+ "')";
+            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" + txtTotal1.getText() + "','" + txtTotal1.getText() + "','" + " Por la compra de mercaderia con factura " + "','" + txtnumeroD2.getText() + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
@@ -583,11 +584,11 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         try {
+        try {
             guardartablaAsientoFactura1();
             String ultimoRegistro = obtnerultimoRgtrAsiento() + "";
             ConexionBD con = new ConexionBD();
-            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" + txttotal2.getText() + "','" + txttotal2.getText() + "','" + " Por la compra de mercaderia con Boleta " + "','" + txtnumeroD2+ "')";
+            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" + txttotal2.getText() + "','" + txttotal2.getText() + "','" + " Por la compra de mercaderia con Boleta " + "','" + txtnumeroD2.getText() + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
@@ -604,7 +605,6 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

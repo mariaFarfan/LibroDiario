@@ -74,8 +74,8 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
             tabla1.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla1.setCodigo("121");
             tabla1.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR COBRAR");
-            tabla1.setDebe("0");
-            tabla1.setHaber(txtTotal.getText());
+            tabla1.setDebe(txtTotal.getText());
+            tabla1.setHaber("0");
 
             ConexionBD con = new ConexionBD();
             String sql = "insert into tablaasiento values(NULL,'" + tabla1.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
@@ -87,8 +87,8 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
             tabla2.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla2.setCodigo("4011");
             tabla2.setDescripcion("IMPUESTO GENERAL A LAS VENTAS ");
-            tabla2.setDebe(txtIgv.getText());
-            tabla2.setHaber("0");
+            tabla2.setDebe("0");
+            tabla2.setHaber(txtIgv.getText());
 
             String sql2 = "insert into tablaasiento values(NULL,'" + tabla2.getNumeroAsiento() + "','" + tabla2.getCodigo() + "','" + tabla2.getDescripcion() + "','" + tabla2.getDebe() + "','" + tabla2.getHaber() + "')";
             Statement s2 = (Statement) con.getConexion().createStatement();
@@ -99,8 +99,8 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
             tabla3.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla3.setCodigo("701");
             tabla3.setDescripcion("MERCADERÍAS");
-            tabla3.setDebe(txtSubTotal.getText());
-            tabla3.setHaber("0");
+            tabla3.setDebe("0");
+            tabla3.setHaber(txtSubTotal.getText());
 
             String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla3.getCodigo() + "','" + tabla3.getDescripcion() + "','" + tabla3.getDebe() + "','" + tabla3.getHaber() + "')";
             Statement s3 = (Statement) con.getConexion().createStatement();

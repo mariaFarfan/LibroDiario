@@ -76,8 +76,8 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
             tabla1.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla1.setCodigo("121");
             tabla1.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR COBRAR");
-            tabla1.setDebe("0");
-            tabla1.setHaber(txtTotalBoleta.getText());
+            tabla1.setDebe(txtTotalBoleta.getText());
+            tabla1.setHaber("0");
 
             ConexionBD con = new ConexionBD();
             String sql = "insert into tablaasiento values(NULL,'" + tabla1.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
@@ -89,8 +89,8 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
             tabla3.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla3.setCodigo("701");
             tabla3.setDescripcion("MERCADERÍAS");
-            tabla3.setDebe(txtTotalBoleta.getText());
-            tabla3.setHaber("0");
+            tabla3.setDebe("0");
+            tabla3.setHaber(txtTotalBoleta.getText());
 
             String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla3.getCodigo() + "','" + tabla3.getDescripcion() + "','" + tabla3.getDebe() + "','" + tabla3.getHaber() + "')";
             Statement s3 = (Statement) con.getConexion().createStatement();
