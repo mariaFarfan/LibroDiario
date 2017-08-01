@@ -5,6 +5,22 @@
  */
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
+import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
+import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtIgv;
+import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtSubTotal;
+import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtTotal;
+import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import nn.main;
+
 /**
  *
  * @author USUARIO
@@ -48,9 +64,8 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtnumeroD2 = new javax.swing.JTextField();
+        txttotal2 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
@@ -60,13 +75,14 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
         jLabel23 = new javax.swing.JLabel();
         jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        txtTotal1 = new javax.swing.JTextField();
+        txtigv = new javax.swing.JTextField();
+        txtSubtotal = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        txtnumeroD1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setForeground(new java.awt.Color(204, 204, 255));
@@ -217,12 +233,15 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Total :");
 
-        jButton1.setText("CALCULAR");
-
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(51, 51, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/accept.png"))); // NOI18N
         jButton2.setText("REGISTRAR COMPRA");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -239,16 +258,13 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
                         .addGap(46, 46, 46)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))))
+                            .addComponent(txttotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtnumeroD2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -256,20 +272,18 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnumeroD2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                    .addComponent(txttotal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addContainerGap())
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "COMPRAS - factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Yu Gothic UI Light", 1, 24), new java.awt.Color(0, 51, 255))); // NOI18N
@@ -286,13 +300,25 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
         jLabel23.setText("Subtotal :");
 
         jButton3.setText("CALCULAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton4.setForeground(new java.awt.Color(51, 51, 255));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/unsch/ingsistemas/contabilidad/Images/accept.png"))); // NOI18N
         jButton4.setText("REGISTRAR COMPRA");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("N° Doc.");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "materia prima" }));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -313,9 +339,9 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel6Layout.createSequentialGroup()
                                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTextField8)
-                                            .addComponent(jTextField9)
-                                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtTotal1)
+                                            .addComponent(txtigv)
+                                            .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton3))
                                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -328,15 +354,19 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
                         .addGap(0, 175, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                        .addComponent(jTextField11)))
+                        .addComponent(txtnumeroD1)))
                 .addContainerGap())
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(99, 99, 99)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(596, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnumeroD1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
@@ -345,19 +375,21 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTotal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel21)
                         .addComponent(jButton3)))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtigv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                    .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -410,12 +442,176 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        double subtotal = main.redondearDecimales(Double.parseDouble(txtTotal1.getText()) / 1.18, 2);
+        double igv = main.redondearDecimales(subtotal * 0.18, 2);
+
+        txtigv.setText(igv + "");
+        txtSubtotal.setText(subtotal + "");
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void guardartablaAsientoFactura() {
+        try {
+            TablaAsiento tabla1 = new TablaAsiento();
+            tabla1.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
+            tabla1.setCodigo("601");
+            tabla1.setDescripcion("MERCADERÍAS");
+            tabla1.setDebe(txtSubtotal.getText());
+            tabla1.setHaber("0");
+
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into tablaasiento values(NULL,'" + tabla1.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            s.close();
+
+            TablaAsiento tabla2 = new TablaAsiento();
+            tabla2.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
+            tabla2.setCodigo("4011");
+            tabla2.setDescripcion("IMPUESTO GENERAL A LAS VENTAS ");
+            tabla2.setDebe(txtigv.getText());
+            tabla2.setHaber("0");
+
+            String sql2 = "insert into tablaasiento values(NULL,'" + tabla2.getNumeroAsiento() + "','" + tabla2.getCodigo() + "','" + tabla2.getDescripcion() + "','" + tabla2.getDebe() + "','" + tabla2.getHaber() + "')";
+            Statement s2 = (Statement) con.getConexion().createStatement();
+            s2.executeUpdate(sql2);
+            s2.close();
+
+            TablaAsiento tabla3 = new TablaAsiento();
+            tabla3.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
+            tabla3.setCodigo("421");
+            tabla3.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR PAGAR");
+            tabla3.setDebe("0");
+            tabla3.setHaber(txtTotal1.getText());
+
+            String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla3.getCodigo() + "','" + tabla3.getDescripcion() + "','" + tabla3.getDebe() + "','" + tabla3.getHaber() + "')";
+            Statement s3 = (Statement) con.getConexion().createStatement();
+            s3.executeUpdate(sql3);
+            s3.close();
+
+            con.cerrarConexion();
+
+            System.out.println(tabla1.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
+    public int obtnerultimoRgtr() throws SQLException {
+        int cx = 0;
+
+        ConexionBD con = new ConexionBD();
+        Statement s = (Statement) con.getConexion().createStatement();
+        ResultSet c = s.executeQuery("select MAX(numeroCorrelativo) from factura ");
+
+        while (c.next()) {
+            cx = c.getInt(1);
+        }
+        return cx + 1;
+
+    }
+
+    public int obtnerultimoRgtrAsiento() throws SQLException {
+        int cx = 0;
+
+        ConexionBD con = new ConexionBD();
+        Statement s = (Statement) con.getConexion().createStatement();
+        ResultSet c = s.executeQuery("select MAX(numeroAsiento) from asiento ");
+
+        while (c.next()) {
+            cx = c.getInt(1);
+        }
+        return cx + 1;
+
+    }
+
+    public String getFecha() {
+        Date ahora = new Date();
+        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yy");
+        return formateador.format(ahora);
+    }
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //guardarcompraF(txtNumeroCorrelativo.getText(), txtfecha.getText(), txtCliente.getText(), txtruc.getText(), txtSubTotal.getText(), txtIgv.getText(), txtTotal.getText());
+
+        try {
+            guardartablaAsientoFactura();
+            String ultimoRegistro = obtnerultimoRgtrAsiento() + "";
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" +  txtTotal1.getText() + "','" + txtTotal1.getText() + "','" + " Por la compra de mercaderia con factura " + "','" + txtnumeroD2.getText()+ "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+        JOptionPane.showMessageDialog(null, "Compra guardada");
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    public void guardartablaAsientoFactura1() {
+        try {
+            TablaAsiento tabla1 = new TablaAsiento();
+            tabla1.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
+            tabla1.setCodigo("601");
+            tabla1.setDescripcion("MERCADERÍAS");
+            tabla1.setDebe(txttotal2.getText());
+            tabla1.setHaber("0");
+
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into tablaasiento values(NULL,'" + tabla1.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            s.close();
+
+            TablaAsiento tabla3 = new TablaAsiento();
+            tabla3.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
+            tabla3.setCodigo("421");
+            tabla3.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR PAGAR");
+            tabla3.setDebe("0");
+            tabla3.setHaber(txttotal2.getText());
+
+            String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla3.getCodigo() + "','" + tabla3.getDescripcion() + "','" + tabla3.getDebe() + "','" + tabla3.getHaber() + "')";
+            Statement s3 = (Statement) con.getConexion().createStatement();
+            s3.executeUpdate(sql3);
+            s3.close();
+
+            con.cerrarConexion();
+
+            System.out.println(tabla1.toString());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         try {
+            guardartablaAsientoFactura1();
+            String ultimoRegistro = obtnerultimoRgtrAsiento() + "";
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" + txttotal2.getText() + "','" + txttotal2.getText() + "','" + " Por la compra de mercaderia con Boleta " + "','" + txtnumeroD2+ "')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+        JOptionPane.showMessageDialog(null, "Compra guardada");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -444,13 +640,13 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField txtSubtotal;
+    private javax.swing.JTextField txtTotal1;
+    private javax.swing.JTextField txtigv;
+    private javax.swing.JTextField txtnumeroD1;
+    private javax.swing.JTextField txtnumeroD2;
+    private javax.swing.JTextField txttotal2;
     // End of variables declaration//GEN-END:variables
 }

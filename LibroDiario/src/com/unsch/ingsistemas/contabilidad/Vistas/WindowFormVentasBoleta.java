@@ -5,10 +5,9 @@
  */
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
-import com.unsch.ingsistemas.contabilidad.Vistas.*;
 import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
-import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormInventario.cod;
-import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormInventario.jtfDescripcion;
+import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtIgv;
+import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtSubTotal;
 import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +18,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import nn.WindowFormProduct2;
 
 /**
  *
@@ -40,7 +40,7 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
 
         ConexionBD con = new ConexionBD();
         Statement s = (Statement) con.getConexion().createStatement();
-        ResultSet c = s.executeQuery("select MAX(numeroCorrelativo) from factura ");
+        ResultSet c = s.executeQuery("select MAX(numeroCorrelativo) from boleta ");
 
         while (c.next()) {
             cx = c.getInt(1);
@@ -72,12 +72,12 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
     public void guardartablaAsientoPatrimonio() {
         ArrayList<TablaAsiento> reg = new ArrayList();
         try {
-            TablaAsiento tabla1 = new TablaAsiento();
+             TablaAsiento tabla1 = new TablaAsiento();
             tabla1.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
-            tabla1.setCodigo("50");
-            tabla1.setDescripcion("CAPITAL");
+            tabla1.setCodigo("121");
+            tabla1.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR COBRAR");
             tabla1.setDebe("0");
-            tabla1.setHaber(txtIgv.getText());
+            tabla1.setHaber(txtTotalBoleta.getText());
 
             ConexionBD con = new ConexionBD();
             String sql = "insert into tablaasiento values(NULL,'" + tabla1.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
@@ -85,26 +85,14 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
             s.executeUpdate(sql);
             s.close();
 
-            TablaAsiento tabla2 = new TablaAsiento();
-            tabla2.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
-            tabla2.setCodigo("50");
-            tabla2.setDescripcion("CAPITAL");
-            tabla2.setDebe("0");
-            tabla2.setHaber(txtIgv.getText());
-
-            String sql2 = "insert into tablaasiento values(NULL,'" + tabla2.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
-            Statement s2 = (Statement) con.getConexion().createStatement();
-            s2.executeUpdate(sql);
-            s2.close();
-
             TablaAsiento tabla3 = new TablaAsiento();
             tabla3.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
-            tabla3.setCodigo("50");
-            tabla3.setDescripcion("CAPITAL");
-            tabla3.setDebe("0");
-            tabla3.setHaber(txtIgv.getText());
+            tabla3.setCodigo("701");
+            tabla3.setDescripcion("MERCADERÍAS");
+            tabla3.setDebe(txtTotalBoleta.getText());
+            tabla3.setHaber("0");
 
-            String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
+            String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla3.getCodigo() + "','" + tabla3.getDescripcion() + "','" + tabla3.getDebe() + "','" + tabla3.getHaber() + "')";
             Statement s3 = (Statement) con.getConexion().createStatement();
             s3.executeUpdate(sql3);
             s3.close();
@@ -154,13 +142,13 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
         txtfecha = new javax.swing.JTextField();
         txtCliente = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtbFactura = new javax.swing.JTable();
+        jtbBoleta = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
         txtMostrarNumeroLetra = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        txtTotal = new javax.swing.JTextField();
+        txtTotalBoleta = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -371,7 +359,7 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jtbFactura.setModel(new javax.swing.table.DefaultTableModel(
+        jtbBoleta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -379,17 +367,17 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
                 "Cant.", "Descripcion", "Precio Unit.", "Importe"
             }
         ));
-        jScrollPane2.setViewportView(jtbFactura);
-        if (jtbFactura.getColumnModel().getColumnCount() > 0) {
-            jtbFactura.getColumnModel().getColumn(0).setMinWidth(100);
-            jtbFactura.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jtbFactura.getColumnModel().getColumn(0).setMaxWidth(100);
-            jtbFactura.getColumnModel().getColumn(2).setMinWidth(100);
-            jtbFactura.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jtbFactura.getColumnModel().getColumn(2).setMaxWidth(100);
-            jtbFactura.getColumnModel().getColumn(3).setMinWidth(100);
-            jtbFactura.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jtbFactura.getColumnModel().getColumn(3).setMaxWidth(100);
+        jScrollPane2.setViewportView(jtbBoleta);
+        if (jtbBoleta.getColumnModel().getColumnCount() > 0) {
+            jtbBoleta.getColumnModel().getColumn(0).setMinWidth(100);
+            jtbBoleta.getColumnModel().getColumn(0).setPreferredWidth(100);
+            jtbBoleta.getColumnModel().getColumn(0).setMaxWidth(100);
+            jtbBoleta.getColumnModel().getColumn(2).setMinWidth(100);
+            jtbBoleta.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jtbBoleta.getColumnModel().getColumn(2).setMaxWidth(100);
+            jtbBoleta.getColumnModel().getColumn(3).setMinWidth(100);
+            jtbBoleta.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jtbBoleta.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         jLabel20.setText("SON :");
@@ -459,7 +447,7 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
                                     .addGap(50, 50, 50)
                                     .addComponent(jLabel24)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtTotalBoleta, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))))
@@ -488,7 +476,7 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel24)
-                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTotalBoleta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)))
                 .addGap(74, 74, 74)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -501,15 +489,16 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -517,16 +506,16 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        WindowFormProduct n = new WindowFormProduct();
+        WindowFormProduct2 n = new WindowFormProduct2();
         n.setLocationRelativeTo(null);
         n.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void guardartablaPlnilla(String numeroCorrelativo, String fecha, String cliente, String ruc, String subTotal, String igv, String total) {
+    public void guardarBoleta(String numeroCorrelativo, String fecha, String cliente, String total) {
         try {
             ArrayList<TablaAsiento> reg = new ArrayList();
             ConexionBD con = new ConexionBD();
-            String sql = "insert into factura values(NULL,'" + numeroCorrelativo + "','" + fecha + "','" + cliente + "','" + ruc + "','" + subTotal + "','" + igv + "','" + total + "')";
+            String sql = "insert into boleta values(NULL,'" + numeroCorrelativo + "','" + fecha + "','" + cliente  + "','"  + total + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
@@ -538,11 +527,12 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        guardartablaPlnilla(txtNumeroCorrelativo.getText(), txtfecha.getText(), txtCliente.getText(), txtruc.getText(), txtSubTotal.getText(), txtIgv.getText(), txtTotal.getText());
+        guardarBoleta(txtNumeroCorrelativo.getText(), txtfecha.getText(), txtCliente.getText(), txtTotalBoleta.getText());
 
         try {
+            guardartablaAsientoPatrimonio();
             ConexionBD con = new ConexionBD();
-            String sql = "insert into asiento values(NULL,'" + obtnerultimoRgtrAsiento()+"" + "','" + txtfecha.getText() + "','" + txtTotal.getText() + "','" + txtTotal.getText() + "','" + " Por la venta de mercaderia con factura " + "','" + txtNumeroCorrelativo.getText() + "')";
+            String sql = "insert into asiento values(NULL,'" + obtnerultimoRgtrAsiento()+"" + "','" + txtfecha.getText() + "','" + txtTotalBoleta.getText() + "','" + txtTotalBoleta.getText() + "','" + " Por la venta de mercaderia con Boleta " + "','" + txtNumeroCorrelativo.getText() + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
@@ -550,8 +540,8 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
 
-        guardartablaAsientoPatrimonio();
-        JOptionPane.showMessageDialog(null, "Factura guardada");
+        
+        JOptionPane.showMessageDialog(null, "Boleta guardada");
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -589,11 +579,11 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
-    public static javax.swing.JTable jtbFactura;
+    public static javax.swing.JTable jtbBoleta;
     private javax.swing.JTextField txtCliente;
     public static javax.swing.JTextField txtMostrarNumeroLetra;
     private javax.swing.JLabel txtNumeroCorrelativo;
-    public static javax.swing.JTextField txtTotal;
+    public static javax.swing.JTextField txtTotalBoleta;
     private javax.swing.JTextField txtfecha;
     // End of variables declaration//GEN-END:variables
 }

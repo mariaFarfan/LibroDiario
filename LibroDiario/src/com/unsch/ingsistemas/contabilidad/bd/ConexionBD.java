@@ -10,23 +10,20 @@ public class ConexionBD {
     private String servidor = "localhost";
     private String database = "pcge2015";
     private String usuario = "root";
-    private String password = "newlifefb94";
+    private String password = "";
     private String url = "";
 
 //    public ConexionBD(String servidor, String database, String usuario, String password) {
     public ConexionBD() {
         try {
 
-            this.servidor = servidor;
-            this.database = database;
+           
             Class.forName("com.mysql.jdbc.Driver");
             //Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
             url = "jdbc:mysql://" + servidor + "/" + database;
             conexion = DriverManager.getConnection(url, usuario, password);
             System.out.println("Conexion a Base de Datos " + url + " . . . . .Ok");
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex);
         }
     }

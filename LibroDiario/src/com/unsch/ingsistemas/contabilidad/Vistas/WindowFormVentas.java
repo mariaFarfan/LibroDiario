@@ -598,7 +598,6 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
-             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
