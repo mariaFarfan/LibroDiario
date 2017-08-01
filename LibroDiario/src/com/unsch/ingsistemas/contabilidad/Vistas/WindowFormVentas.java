@@ -15,9 +15,19 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -592,7 +602,7 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
 
         try {
             guardartablaAsientoFactura();
-            String ultimoRegistro = obtnerultimoRgtrAsiento()+"";
+            String ultimoRegistro = obtnerultimoRgtrAsiento() + "";
             ConexionBD con = new ConexionBD();
             String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + txtfecha.getText() + "','" + txtTotal.getText() + "','" + txtTotal.getText() + "','" + " Por la venta de mercaderia con factura " + "','" + txtNumeroCorrelativo.getText() + "')";
             Statement s = (Statement) con.getConexion().createStatement();
@@ -602,13 +612,36 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
 
-       
         JOptionPane.showMessageDialog(null, "Factura guardada");
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // Generar reportes
+            JasperReport jr = (JasperReport) JRLoader.loadObject(WindowFormAsiento.class.getResource("/com/unsch/ingsistemas/contabilidad/Reportes/factura.jasper"));
+            Map parametro = new HashMap<String, Object>();
+            parametro.put("fecha", (String) getFecha());
+            parametro.put("numeroDoc", (String) txtNumeroCorrelativo.getText());
+            parametro.put("ruc", (String) txtruc.getText());
+            parametro.put("nombre", (String) txtCliente.getText());
+
+            parametro.put("total", (String) txtTotal.getText());
+            parametro.put("subtotal", (String) txtSubTotal.getText());
+            parametro.put("igv", (String) txtIgv.getText());
+            parametro.put("pago", (String) txtMostrarNumeroLetra.getText());
+
+            JRTableModelDataSource jrtmd = new JRTableModelDataSource(jtbFactura.getModel());
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, jrtmd);
+//            JasperPrint jp = JasperFillManager.fillReport(jr, parametro, new JREmptyDataSource());
+
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.show();
+            jv.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
 

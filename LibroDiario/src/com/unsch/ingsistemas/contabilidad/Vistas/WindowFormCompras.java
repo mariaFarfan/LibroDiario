@@ -587,7 +587,7 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
             guardartablaAsientoFactura1();
             String ultimoRegistro = obtnerultimoRgtrAsiento() + "";
             ConexionBD con = new ConexionBD();
-            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" + txttotal2.getText() + "','" + txttotal2.getText() + "','" + " Por la compra de mercaderia con Boleta " + "','" + txtnumeroD2+ "')";
+            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" + txttotal2.getText() + "','" + txttotal2.getText() + "','" + " Por la compra de mercaderia con Boleta " + "','" + txtnumeroD2.getText()+ "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
