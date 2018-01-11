@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.unsch.ingsistemas.contabilidad.Vistas;
+package nn;
 
+import com.unsch.ingsistemas.contabilidad.Vistas.*;
 import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
 import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormProduct.jtbProducto;
 import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
@@ -23,12 +24,12 @@ import javax.swing.table.TableColumnModel;
  *
  * @author USUARIO
  */
-public class WindowFormProductAdd extends javax.swing.JFrame {
+public class WindowFormProductAdd5 extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
     DefaultTableModel modelo1;
 
-      public void llenarTabla() {
+    public void llenarTabla() {
         modelo = (DefaultTableModel) WindowFormProduct.jtbProducto.getModel();
         modelo.setRowCount(0);
         String[] registro = new String[4];
@@ -57,11 +58,11 @@ public class WindowFormProductAdd extends javax.swing.JFrame {
         }
         //System.out.println("lleno tabla ok");
     }
-    
+
     /**
      * Creates new form WindowFormProductAdd
      */
-    public WindowFormProductAdd() {
+    public WindowFormProductAdd5() {
         initComponents();
     }
 
@@ -163,16 +164,30 @@ public class WindowFormProductAdd extends javax.swing.JFrame {
             s.executeUpdate(sql);
             con.cerrarConexion();
         } catch (SQLException ex) {
-            Logger.getLogger(WindowFormProductAdd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WindowFormProductAdd5.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
 
     }
+
+    public void guardarProductoInicial(String nombre, String Descripcion, int canidadExistencia, double precioVenta, double precioCompra) {
+        try {
+            ArrayList<TablaAsiento> reg = new ArrayList();
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into productoInicial values(NULL,'" + nombre + "','" + Descripcion + "'," + canidadExistencia + "," + precioVenta + "," + precioCompra + ")";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowFormProductAdd5.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         guardartablaPlnilla(txtnombre.getText(), txtDescripcion.getText(), Integer.parseInt(txtCantidad.getText()), Double.parseDouble(txtPrecioVenta.getText()), Double.parseDouble(txtPrecioCompra.getText()));
-        llenarTabla();
+        guardarProductoInicial(txtnombre.getText(), txtDescripcion.getText(), Integer.parseInt(txtCantidad.getText()), Double.parseDouble(txtPrecioVenta.getText()), Double.parseDouble(txtPrecioCompra.getText()));
+//        llenarTabla();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -193,20 +208,21 @@ public class WindowFormProductAdd extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WindowFormProductAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowFormProductAdd5.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WindowFormProductAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowFormProductAdd5.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WindowFormProductAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowFormProductAdd5.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WindowFormProductAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WindowFormProductAdd5.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new WindowFormProductAdd().setVisible(true);
+                new WindowFormProductAdd5().setVisible(true);
             }
         });
     }

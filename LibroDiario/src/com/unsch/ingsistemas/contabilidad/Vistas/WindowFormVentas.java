@@ -6,8 +6,6 @@
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
 import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
-import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormInventario.cod;
-import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormInventario.jtfDescripcion;
 import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,6 +40,20 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
         Date ahora = new Date();
         SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yy");
         return formateador.format(ahora);
+    }
+
+    public void guardarVenta(String nombre, String cantidad,String documento) {
+        try {
+            ArrayList<TablaAsiento> reg = new ArrayList();
+            ConexionBD con = new ConexionBD();
+            // INSERT INTO `compra` VALUES ('', '12/12/12', 'USB', '23');
+            String sql = "insert into venta values(NULL,'" + getFecha() + "','" + nombre + "','" + cantidad + "','"+ documento+"','VENTA')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowFormProductAdd.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public int obtnerultimoRgtr() throws SQLException {
@@ -613,6 +625,21 @@ public class WindowFormVentas extends javax.swing.JInternalFrame {
         }
 
         JOptionPane.showMessageDialog(null, "Factura guardada");
+
+        // Recorrer toda la tabla y guaradr cada fila
+        int fila = jtbFactura.getRowCount();
+        int columna = jtbFactura.getColumnCount();
+        int i;
+        String cantidad = "";        String nombre = "";
+
+        String valores ="";
+        for (i = 0; i < fila; i++) {
+            cantidad = (String) jtbFactura.getValueAt(i, 0);
+            nombre = (String) jtbFactura.getValueAt(i, 1);
+            //valores = valores + ", " + valor+ valor2;
+            String doc = "Factura / N° "+txtNumeroCorrelativo.getText();
+            guardarVenta(nombre, cantidad,doc);
+        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

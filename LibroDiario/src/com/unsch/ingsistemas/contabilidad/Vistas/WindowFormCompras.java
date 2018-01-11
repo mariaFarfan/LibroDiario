@@ -6,18 +6,12 @@
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
 import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
-import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtIgv;
-import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtSubTotal;
-import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtTotal;
 import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import nn.main;
 
@@ -437,14 +431,14 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
         } else {
             double subtotal = main.redondearDecimales(Double.parseDouble(txtTotal1.getText()) / 1.18, 2);
             double igv = main.redondearDecimales((subtotal) * 0.18, 2);
-
+            
             txtigv.setText(igv + "");
             txtSubtotal.setText(subtotal + "");
         }
-
+        
 
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    
     public void guardartablaAsientoFactura() {
         try {
             TablaAsiento tabla1 = new TablaAsiento();
@@ -453,74 +447,74 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
             tabla1.setDescripcion("MERCADERÍAS");
             tabla1.setDebe(txtSubtotal.getText());
             tabla1.setHaber("0");
-
+            
             ConexionBD con = new ConexionBD();
             String sql = "insert into tablaasiento values(NULL,'" + tabla1.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             s.close();
-
+            
             TablaAsiento tabla2 = new TablaAsiento();
             tabla2.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla2.setCodigo("4011");
             tabla2.setDescripcion("IMPUESTO GENERAL A LAS VENTAS ");
             tabla2.setDebe(txtigv.getText());
             tabla2.setHaber("0");
-
+            
             String sql2 = "insert into tablaasiento values(NULL,'" + tabla2.getNumeroAsiento() + "','" + tabla2.getCodigo() + "','" + tabla2.getDescripcion() + "','" + tabla2.getDebe() + "','" + tabla2.getHaber() + "')";
             Statement s2 = (Statement) con.getConexion().createStatement();
             s2.executeUpdate(sql2);
             s2.close();
-
+            
             TablaAsiento tabla3 = new TablaAsiento();
             tabla3.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla3.setCodigo("421");
             tabla3.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR PAGAR");
             tabla3.setDebe("0");
             tabla3.setHaber(txtTotal1.getText());
-
+            
             String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla3.getCodigo() + "','" + tabla3.getDescripcion() + "','" + tabla3.getDebe() + "','" + tabla3.getHaber() + "')";
             Statement s3 = (Statement) con.getConexion().createStatement();
             s3.executeUpdate(sql3);
             s3.close();
-
+            
             con.cerrarConexion();
-
+            
             System.out.println(tabla1.toString());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-
+        
     }
-
+    
     public int obtnerultimoRgtr() throws SQLException {
         int cx = 0;
-
+        
         ConexionBD con = new ConexionBD();
         Statement s = (Statement) con.getConexion().createStatement();
         ResultSet c = s.executeQuery("select MAX(numeroCorrelativo) from factura ");
-
+        
         while (c.next()) {
             cx = c.getInt(1);
         }
         return cx + 1;
-
+        
     }
-
+    
     public int obtnerultimoRgtrAsiento() throws SQLException {
         int cx = 0;
-
+        
         ConexionBD con = new ConexionBD();
         Statement s = (Statement) con.getConexion().createStatement();
         ResultSet c = s.executeQuery("select MAX(numeroAsiento) from asiento ");
-
+        
         while (c.next()) {
             cx = c.getInt(1);
         }
         return cx + 1;
-
+        
     }
-
+    
     public String getFecha() {
         Date ahora = new Date();
         SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yy");
@@ -538,14 +532,17 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
-
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-
-        JOptionPane.showMessageDialog(null, "Compra guardada");
+        
+        product v = new product();
+        v.setVisible(true);
+        v.setLocationRelativeTo(null);
+       
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    
     public void guardartablaAsientoFactura1() {
         try {
             TablaAsiento tabla1 = new TablaAsiento();
@@ -554,32 +551,32 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
             tabla1.setDescripcion("MERCADERÍAS");
             tabla1.setDebe(txttotal2.getText());
             tabla1.setHaber("0");
-
+            
             ConexionBD con = new ConexionBD();
             String sql = "insert into tablaasiento values(NULL,'" + tabla1.getNumeroAsiento() + "','" + tabla1.getCodigo() + "','" + tabla1.getDescripcion() + "','" + tabla1.getDebe() + "','" + tabla1.getHaber() + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             s.close();
-
+            
             TablaAsiento tabla3 = new TablaAsiento();
             tabla3.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla3.setCodigo("421");
             tabla3.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR PAGAR");
             tabla3.setDebe("0");
             tabla3.setHaber(txttotal2.getText());
-
+            
             String sql3 = "insert into tablaasiento values(NULL,'" + tabla3.getNumeroAsiento() + "','" + tabla3.getCodigo() + "','" + tabla3.getDescripcion() + "','" + tabla3.getDebe() + "','" + tabla3.getHaber() + "')";
             Statement s3 = (Statement) con.getConexion().createStatement();
             s3.executeUpdate(sql3);
             s3.close();
-
+            
             con.cerrarConexion();
-
+            
             System.out.println(tabla1.toString());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-
+        
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -588,19 +585,18 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
             guardartablaAsientoFactura1();
             String ultimoRegistro = obtnerultimoRgtrAsiento() + "";
             ConexionBD con = new ConexionBD();
-<<<<<<< HEAD
+            
             String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" + txttotal2.getText() + "','" + txttotal2.getText() + "','" + " Por la compra de mercaderia con Boleta " + "','" + txtnumeroD2.getText() + "')";
-=======
-            String sql = "insert into asiento values(NULL,'" + ultimoRegistro + "','" + getFecha() + "','" + txttotal2.getText() + "','" + txttotal2.getText() + "','" + " Por la compra de mercaderia con Boleta " + "','" + txtnumeroD2.getText()+ "')";
->>>>>>> fe99a8851146963126e15b4593cf87bbcf3cacf1
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
-
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
-
+         product v = new product();
+        v.setVisible(true);
+        v.setLocationRelativeTo(null);
         JOptionPane.showMessageDialog(null, "Compra guardada");
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -643,8 +639,8 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtSubtotal;
     private javax.swing.JTextField txtTotal1;
     private javax.swing.JTextField txtigv;
-    private javax.swing.JTextField txtnumeroD1;
-    private javax.swing.JTextField txtnumeroD2;
+    public static javax.swing.JTextField txtnumeroD1;
+    public static javax.swing.JTextField txtnumeroD2;
     private javax.swing.JTextField txttotal2;
     // End of variables declaration//GEN-END:variables
 }

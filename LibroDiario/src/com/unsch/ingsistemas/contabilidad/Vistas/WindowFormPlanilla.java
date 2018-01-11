@@ -6,10 +6,12 @@
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
 import com.unsch.ingsistemas.contabilidad.Clases.CellRenderer;
+import com.unsch.ingsistemas.contabilidad.Clases.Empleado;
 import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
 import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormAsiento.jtfCuenta;
 import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormAsiento.jtfDescripcion;
 import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
+import com.unsch.ingsistemas.contabilidad.bd.EmpleadoCRUD;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.HeadlessException;
@@ -197,6 +199,7 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
         rpt11 = new javax.swing.JLabel();
         rpt12 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -280,7 +283,7 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHaberBasico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtOtros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -524,6 +527,13 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
         jLabel31.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jLabel31.setText("TOTAL :");
 
+        jButton6.setText("...");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -578,7 +588,10 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
                                         .addGap(24, 24, 24)
                                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jButton6))))
                                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,7 +607,7 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel17)
-                .addGap(42, 42, 42)
+                .addGap(41, 41, 41)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -604,13 +617,14 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -664,11 +678,29 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Ingrese Datos Correctos :) ");
             } else {
 
-                double asigFamiliar = 0.10 * 850;
+//                 si tiene hijo 10%
+//                 si no tiene  0 
+                double asigFamiliar=0;
+                EmpleadoCRUD ec = new EmpleadoCRUD();
+                Empleado e = ec.select(txtNombre.getText());
+                double hijo = Double.parseDouble(e.getHijo());
+                if (hijo > 0) {
+                    asigFamiliar = 0.10 * 850;
+                } 
+
                 double remuneraconBruta = Double.parseDouble(txtHaberBasico.getText()) + asigFamiliar + Double.parseDouble(txtOtros.getText());
 
-                double afp = 0.13 * Double.parseDouble(txtHaberBasico.getText());
-                double snp = 0.13 * Double.parseDouble(txtHaberBasico.getText());
+                // depende cual tenga
+                String pension  =  e.getPension();
+                double snp =0;
+                double afp =0;
+                if (pension.equalsIgnoreCase("afp")) {
+                     afp = 0.1356 * Double.parseDouble(txtHaberBasico.getText());
+                }
+                else{
+                    snp = 0.13 * Double.parseDouble(txtHaberBasico.getText());
+                }
+                
                 double remuneracionNeta = remuneraconBruta - afp - snp - Double.parseDouble(txtOtrosDescuentos.getText());
 
                 double seguro = 0.9 * remuneraconBruta;
@@ -680,12 +712,7 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
                     remuneraconBruta, afp, snp, txtOtrosDescuentos.getText(), remuneracionNeta, seguro, senati,
                     sctr, txtOtrosAportes.getText()});
                 sumaHaber();
-                
-                
-                
-                
-                
-                
+
             }
 
         } catch (HeadlessException | NumberFormatException e) {
@@ -799,9 +826,7 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
         rpt10.setText("00.00");
         rpt11.setText("00.00");
         rpt12.setText("00.00");
-        
-        
-        
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -823,6 +848,13 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        WindowFormFindEmployee v = new WindowFormFindEmployee();
+        v.setVisible(true);
+        v.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -830,6 +862,7 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
@@ -865,9 +898,9 @@ public class WindowFormPlanilla extends javax.swing.JInternalFrame {
     private javax.swing.JLabel rpt8;
     private javax.swing.JLabel rpt9;
     private javax.swing.JTextField txtAdministracion;
-    private javax.swing.JTextField txtCargo;
+    public static javax.swing.JTextField txtCargo;
     private javax.swing.JTextField txtHaberBasico;
-    private javax.swing.JTextField txtNombre;
+    public static javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtOtros;
     private javax.swing.JTextField txtOtrosAportes;
     private javax.swing.JTextField txtOtrosDescuentos;
