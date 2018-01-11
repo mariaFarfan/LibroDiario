@@ -64,6 +64,19 @@ public class product extends javax.swing.JFrame {
         }
     }
 
+    public void guardarProductoInicial(String nombre, String Descripcion, int canidadExistencia, double precioVenta, double precioCompra) {
+        try {
+            ArrayList<TablaAsiento> reg = new ArrayList();
+            ConexionBD con = new ConexionBD();
+            String sql = "insert into productoinicial values(NULL,'" + nombre + "','" + Descripcion + "'," + canidadExistencia + "," + precioVenta + "," + precioCompra + ")";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowFormProductAdd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void ActualizarProducto(String producto, String descripcion, int cantidadStock, double precioVenta, double precioCompra) {
 
         try {
@@ -92,7 +105,7 @@ public class product extends javax.swing.JFrame {
 
     public String getFecha() {
         Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yy");
+        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-dd-MM");
         return formateador.format(ahora);
     }
 
@@ -287,10 +300,20 @@ public class product extends javax.swing.JFrame {
 
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String documento = "";
+        // Guardar en la tabla Compra
+        if (WindowFormCompras.txtnumeroD1.getText().equalsIgnoreCase("")) {
+            documento = "Boleta / N° " + WindowFormCompras.txtnumeroD2.getText();
+        } else {
+            documento = "Factura / N° " + WindowFormCompras.txtnumeroD1.getText();
+
+        }
         if (stock.equalsIgnoreCase("")) {
             // Agregar Producto
             // String nombre, String Descripcion, int canidadExistencia, double precioVenta, double precioCompra
             guardarProducto(txtProducto.getText(), txtDescripcion.getText(), Integer.parseInt(txtCantidad.getText()),
+                    Double.parseDouble(txtPrecio.getText()) * 0.20 + Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecio.getText()));
+            guardarProductoInicial(txtProducto.getText(), txtDescripcion.getText(), Integer.parseInt(txtCantidad.getText()),
                     Double.parseDouble(txtPrecio.getText()) * 0.20 + Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecio.getText()));
             llenarTabla();
 
@@ -300,18 +323,10 @@ public class product extends javax.swing.JFrame {
             ActualizarProducto(txtProducto.getText(), txtDescripcion.getText(), Integer.parseInt(txtCantidad.getText()) + Integer.parseInt(stock), Double.parseDouble(txtPrecio.getText()) * 0.20 + Double.parseDouble(txtPrecio.getText()), Double.parseDouble(txtPrecio.getText()));
             llenarTabla();
             stock = "";
-
-        }
-        String documento = "";
-        // Guardar en la tabla Compra
-        if (WindowFormCompras.txtnumeroD1.getText().equalsIgnoreCase("")) {
-            documento = "Boleta / N° " + WindowFormCompras.txtnumeroD2.getText();
-        } else {
-            documento = "Factura / N° " + WindowFormCompras.txtnumeroD1.getText();
+            guardarCompra(txtProducto.getText(), txtCantidad.getText(), documento);
 
         }
 
-        guardarCompra(txtProducto.getText(), txtCantidad.getText(), documento);
         JOptionPane.showMessageDialog(null, "Actualizado :) ");
         llenarTabla();
 

@@ -49,7 +49,7 @@ public class formKradex extends javax.swing.JFrame {
         registro[10] = VALORTOTAL + "";
         modelo.addRow(registro);
 
-        String s = "SELECT * FROM compra WHERE producto='" + ProductOptionKardex.productoElegido + "' UNION ALL SELECT * FROM venta WHERE producto='" + ProductOptionKardex.productoElegido + "' ORDER BY fecha;";
+        String s = "SELECT * FROM compra WHERE producto='" + ProductOptionKardex.productoElegido + "' UNION ALL SELECT * FROM venta WHERE producto='" + ProductOptionKardex.productoElegido + "' ORDER BY fecha desc;";
 
         ConexionBD mysql = new ConexionBD();
         Connection cn = mysql.getConexion();

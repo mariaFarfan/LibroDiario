@@ -5,10 +5,14 @@
  */
 package com.unsch.ingsistemas.contabilidad.Vistas;
 
+import com.unsch.ingsistemas.contabilidad.Clases.Producto;
 import com.unsch.ingsistemas.contabilidad.Clases.TablaAsiento;
+import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.jtbFactura;
 import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtIgv;
 import static com.unsch.ingsistemas.contabilidad.Vistas.WindowFormVentas.txtSubTotal;
 import com.unsch.ingsistemas.contabilidad.bd.ConexionBD;
+import com.unsch.ingsistemas.contabilidad.bd.ProductoCrud;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,12 +30,49 @@ import nn.WindowFormProduct2;
  */
 public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
 
+    public void guardarVenta(String nombre, String cantidad, String documento) {
+        try {
+            ArrayList<TablaAsiento> reg = new ArrayList();
+            ConexionBD con = new ConexionBD();
+            // INSERT INTO `compra` VALUES ('', '12/12/12', 'USB', '23');
+            String sql = "insert into venta values(NULL,'" + getFecha() + "','" + nombre + "','" + cantidad + "','" + documento + "','VENTA')";
+            Statement s = (Statement) con.getConexion().createStatement();
+            s.executeUpdate(sql);
+            con.cerrarConexion();
+        } catch (SQLException ex) {
+            Logger.getLogger(WindowFormProductAdd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void ActualizarProducto(String producto, int cantidadStock) {
+
+        try {
+            ConexionBD con = new ConexionBD();
+            Statement s = (Statement) con.getConexion().createStatement();
+
+            PreparedStatement stmt;
+            // UPDATE `producto` SET `Nombre` = 'Usb', `Descripcion` = 'Toshiba' WHERE `producto`.`id` = 8;
+            // UPDATE `producto` 
+            //SET `Nombre` = 'Laptop', `Descripcion` = 'HP', `cantidad_existencia` = '45', `PrecioVenta` = '300', `PrecioCompra` = '250' WHERE `producto`.`id` = 7;
+            stmt = con.getConexion().prepareStatement("UPDATE producto SET cantidad_existencia = ? WHERE Nombre=?");
+            stmt.setInt(1, cantidadStock);
+            stmt.setString(2, producto);
+            int retorno = stmt.executeUpdate();
+            con.cerrarConexion();
+
+            System.out.println(retorno);
+        } catch (SQLException ex) {
+            Logger.getLogger(product.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     /**
      * Creates new form Ventas
      */
     public String getFecha() {
         Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yy");
+        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-dd-MM");
         return formateador.format(ahora);
     }
 
@@ -72,7 +113,7 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
     public void guardartablaAsientoPatrimonio() {
         ArrayList<TablaAsiento> reg = new ArrayList();
         try {
-             TablaAsiento tabla1 = new TablaAsiento();
+            TablaAsiento tabla1 = new TablaAsiento();
             tabla1.setNumeroAsiento(obtnerultimoRgtrAsiento() + "");
             tabla1.setCodigo("121");
             tabla1.setDescripcion("FACTURAS, BOLETAS Y OTROS COMPROBANTES POR COBRAR");
@@ -515,7 +556,7 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
         try {
             ArrayList<TablaAsiento> reg = new ArrayList();
             ConexionBD con = new ConexionBD();
-            String sql = "insert into boleta values(NULL,'" + numeroCorrelativo + "','" + fecha + "','" + cliente  + "','"  + total + "')";
+            String sql = "insert into boleta values(NULL,'" + numeroCorrelativo + "','" + fecha + "','" + cliente + "','" + total + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
@@ -532,7 +573,7 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
         try {
             guardartablaAsientoPatrimonio();
             ConexionBD con = new ConexionBD();
-            String sql = "insert into asiento values(NULL,'" + obtnerultimoRgtrAsiento()+"" + "','" + txtfecha.getText() + "','" + txtTotalBoleta.getText() + "','" + txtTotalBoleta.getText() + "','" + " Por la venta de mercaderia con Boleta " + "','" + txtNumeroCorrelativo.getText() + "')";
+            String sql = "insert into asiento values(NULL,'" + obtnerultimoRgtrAsiento() + "" + "','" + txtfecha.getText() + "','" + txtTotalBoleta.getText() + "','" + txtTotalBoleta.getText() + "','" + " Por la venta de mercaderia con Boleta " + "','" + txtNumeroCorrelativo.getText() + "')";
             Statement s = (Statement) con.getConexion().createStatement();
             s.executeUpdate(sql);
             con.cerrarConexion();
@@ -540,8 +581,31 @@ public class WindowFormVentasBoleta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
 
-        
         JOptionPane.showMessageDialog(null, "Boleta guardada");
+
+        // Recorrer toda la tabla y guaradr cada fila
+        int fila = jtbBoleta.getRowCount();
+        int columna = jtbBoleta.getColumnCount();
+        int i;
+        String cantidad = "";
+        String nombre = "";
+
+        String valores = "";
+        for (i = 0; i < fila; i++) {
+            cantidad = (String) jtbBoleta.getValueAt(i, 0);
+            nombre = (String) jtbBoleta.getValueAt(i, 1);
+            //valores = valores + ", " + valor+ valor2;
+            String doc = "Boleta / N° " + txtNumeroCorrelativo.getText();
+            guardarVenta(nombre, cantidad, doc);
+            ProductoCrud p = new ProductoCrud();
+            Producto pr = p.select2(nombre);
+            System.out.println(pr);
+            System.out.println(cantidad);
+            System.out.println(nombre);
+            int cantActual = pr.getCantidad_existencia() - Integer.parseInt(cantidad);
+            ActualizarProducto(nombre, cantActual);
+        }
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

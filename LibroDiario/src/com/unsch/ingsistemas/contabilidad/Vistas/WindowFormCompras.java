@@ -517,7 +517,7 @@ public class WindowFormCompras extends javax.swing.JInternalFrame {
     
     public String getFecha() {
         Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yy");
+        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-dd-MM");
         return formateador.format(ahora);
     }
 
